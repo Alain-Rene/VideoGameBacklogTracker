@@ -15,7 +15,7 @@ public partial class VideoGameBacklogDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Game> Games { get; set; }
+    public virtual DbSet<GameApi> Games { get; set; }
 
     public virtual DbSet<ProgressLog> ProgressLogs { get; set; }
 
@@ -23,8 +23,8 @@ public partial class VideoGameBacklogDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost,1433; Initial Catalog=VideoGameBacklogDB; User ID=sa; Password=D3ffL6mI9frf; TrustServerCertificate=true;");
-     // => optionsBuilder.UseSqlServer("Scaffold-DbContext 'Data Source=.\sqlexpress;Initial Catalog=VideoGameBacklogDB; Integrated Security=SSPI;Encrypt=false;TrustServerCertificate=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models"); 
+        //=> optionsBuilder.UseSqlServer("Server=localhost,1433; Initial Catalog=VideoGameBacklogDB; User ID=sa; Password=D3ffL6mI9frf; TrustServerCertificate=true;");
+      => optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=VideoGameBacklogDB; Integrated Security=SSPI;Encrypt=false;TrustServerCertificate=True;"); 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Game>(entity =>

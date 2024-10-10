@@ -3,36 +3,36 @@ using System.Collections.Generic;
 
 namespace VideoGameBacklog.Models;
 
-public partial class Game
-{
-    public int GameId { get; set; }
+//public partial class Game
+//{
+//    public int GameId { get; set; }
 
-    public string? Title { get; set; }
+//    public string? Title { get; set; }
 
-    public string? Genre { get; set; }
+//    public string? Genre { get; set; }
 
-    public string? Description { get; set; }
+//    public string? Description { get; set; }
 
-    public DateOnly? ReleaseDate { get; set; }
+//    public DateOnly? ReleaseDate { get; set; }
 
-    public decimal? Rating { get; set; }
+//    public decimal? Rating { get; set; }
 
-    public string? Platform { get; set; }
+//    public string? Platform { get; set; }
 
-    public string? Franchise { get; set; }
+//    public string? Franchise { get; set; }
 
-    public string? InvolvedCompanies { get; set; }
+//    public string? InvolvedCompanies { get; set; }
 
-    public string? ImageUrl { get; set; }
+//    public string? ImageUrl { get; set; }
 
-    public int? HltbmainTime { get; set; }
+//    public int? HltbmainTime { get; set; }
 
-    public int? Hltbextras { get; set; }
+//    public int? Hltbextras { get; set; }
 
-    public int? Hltbcompletionist { get; set; }
+//    public int? Hltbcompletionist { get; set; }
 
-    public virtual ICollection<ProgressLog> ProgressLogs { get; set; } = new List<ProgressLog>();
-}
+//    public virtual ICollection<ProgressLog> ProgressLogs { get; set; } = new List<ProgressLog>();
+//}
 
 
 public class GameApi
