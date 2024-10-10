@@ -28,10 +28,10 @@ namespace VideoGameBacklog.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/adventure")]
-        public async Task<IActionResult> GetGamesAdventure()
+        [HttpGet("/filter")]
+        public async Task<IActionResult> GetFilteredGames(string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
         {
-            List<GameApi> result = await _videoGameDetailsService.GetGamesAdventure(0, 5);
+            List<GameApi> result = await _videoGameDetailsService.GetFilteredGames(0, 5, name, genre, rating, companyName, platform, releaseYear);
             return Ok(result);
         }
 
@@ -51,21 +51,24 @@ namespace VideoGameBacklog.Controllers
             }
 
             GameApi gameToAdd = await _videoGameDetailsService.GetGameById(game.id);
+            Game game1 = new Game();
             if(gameToAdd != null)
             {
-                gameToAdd.name = game.name;
-                gameToAdd.platforms = game.platforms;
-                gameToAdd.cover = game.cover;
-                gameToAdd.involved_companies = game.involved_companies;
-                gameToAdd.rating = game.rating;
-                gameToAdd.summary = game.summary;
-                gameToAdd.genres = game.genres;
-                gameToAdd.release_dates = game.release_dates;
+                game1.GameId = gameToAdd.id;
             }
             gameToAdd.id = 0;
-            dbContext.Games.Add(gameToAdd);
+
+            dbContext.Games.Add(game1);
             await dbContext.SaveChangesAsync();
-            return Created($"games/{gameToAdd.id}", gameToAdd);
+            return Created($"games/{game1.Id}", game1);
+        }
+
+        [HttpGet("backlog/{id}")]
+        public async Task<IActionResult> GetBacklogGames(int id)
+        {
+
+            List<GameApi> result = await _videoGameDetailsService.GetGamesInBacklog(id);
+            return Ok(result);
         }
     }
 }

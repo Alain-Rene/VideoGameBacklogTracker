@@ -13,7 +13,7 @@ public partial class User
     public string? UserName { get; set; }
 
     public string? Pfp { get; set; }
-
+    
     [JsonIgnore]
     public virtual ICollection<ProgressLog> ProgressLogs { get; set; } = new List<ProgressLog>();
 }

@@ -15,7 +15,7 @@ public partial class VideoGameBacklogDbContext : DbContext
     {
     }
 
-    public virtual DbSet<GameApi> Games { get; set; }
+    public virtual DbSet<Game> Games { get; set; }
 
     public virtual DbSet<ProgressLog> ProgressLogs { get; set; }
 
@@ -23,36 +23,29 @@ public partial class VideoGameBacklogDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        //=> optionsBuilder.UseSqlServer("Server=localhost,1433; Initial Catalog=VideoGameBacklogDB; User ID=sa; Password=D3ffL6mI9frf; TrustServerCertificate=true;");
-      => optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=VideoGameBacklogDB; Integrated Security=SSPI;Encrypt=false;TrustServerCertificate=True;"); 
+        => optionsBuilder.UseSqlServer("Server=localhost,1433; Initial Catalog=VideoGameBacklogDB; User ID=SA; Password=D3ffL6mI9frf; TrustServerCertificate=true;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Game>(entity =>
         {
-            entity.HasKey(e => e.GameId).HasName("PK__games__2AB897DD13ADEB21");
+            entity.HasKey(e => e.GameId).HasName("PK__games__2AB897DDF13826F8");
 
             entity.ToTable("games");
+
+            entity.HasIndex(e => e.Id, "UQ__games__3213E83E613C67E9").IsUnique();
 
             entity.Property(e => e.GameId)
                 .ValueGeneratedNever()
                 .HasColumnName("GameID");
-            entity.Property(e => e.Franchise).HasMaxLength(255);
-            entity.Property(e => e.Genre).HasMaxLength(255);
-            entity.Property(e => e.Hltbcompletionist).HasColumnName("HLTBCompletionist");
-            entity.Property(e => e.Hltbextras).HasColumnName("HLTBExtras");
-            entity.Property(e => e.HltbmainTime).HasColumnName("HLTBMainTime");
-            entity.Property(e => e.ImageUrl)
-                .HasMaxLength(4000)
-                .HasColumnName("ImageURL");
-            entity.Property(e => e.InvolvedCompanies).HasMaxLength(255);
-            entity.Property(e => e.Platform).HasMaxLength(255);
-            entity.Property(e => e.Rating).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.Title).HasMaxLength(255);
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
         });
 
         modelBuilder.Entity<ProgressLog>(entity =>
         {
-            entity.HasKey(e => e.LogId).HasName("PK__progress__5E5499A8984AA870");
+            entity.HasKey(e => e.LogId).HasName("PK__progress__5E5499A8E49403AD");
 
             entity.ToTable("progressLogs");
 
@@ -63,11 +56,11 @@ public partial class VideoGameBacklogDbContext : DbContext
 
             entity.HasOne(d => d.Game).WithMany(p => p.ProgressLogs)
                 .HasForeignKey(d => d.GameId)
-                .HasConstraintName("FK__progressL__GameI__3D5E1FD2");
+                .HasConstraintName("FK__progressL__GameI__4D94879B");
 
             entity.HasOne(d => d.User).WithMany(p => p.ProgressLogs)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__progressL__UserI__3C69FB99");
+                .HasConstraintName("FK__progressL__UserI__4CA06362");
         });
 
         modelBuilder.Entity<User>(entity =>
