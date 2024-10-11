@@ -25,7 +25,7 @@ namespace Services
         }
         private const string ClientID = "ff0ca20shq346e24m52cp9ozizz6ua"; // Twitch client ID
         private const string Authorization = "ll77khnf1la36uuwzx8z7e0sfzsfjm"; // Twitch access token for IGDB API
-        public async Task<List<GameApi>> GetGames(int offset, int limit = 5)
+        public async Task<List<GameApi>> GetGames(int offset, int limit = 5) //not sure if offset and limit are necessary. Limit is default 10 and prolly don't need to offset that. -DB
         {
             string endpoint = "games";
 
@@ -205,7 +205,7 @@ namespace Services
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, rating, involved_companies.company.name, franchise, platforms.name,release_dates.human, cover.url; where id = {id};";
+            string requestBody = $"fields name, genres.name, summary, rating, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
 
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
             {
