@@ -42,26 +42,24 @@ namespace VideoGameBacklog.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddGame([FromBody]GameApi game)
-        {
-            if(game == null)
-            {
-                return BadRequest("Could not find game.");
-            }
+        // [HttpPost]
+        // public async Task<IActionResult> AddGame([FromBody]GameApi game)
+        // {
+        //     if(game == null)
+        //     {
+        //         return BadRequest("Could not find game.");
+        //     }
 
-            GameApi gameToAdd = await _videoGameDetailsService.GetGameById(game.id);
-            Game game1 = new Game();
-            if(gameToAdd != null)
-            {
-                game1.GameId = gameToAdd.id;
-            }
-            gameToAdd.id = 0;
+        //     GameApi gameToAdd = await _videoGameDetailsService.GetGameById(game.id);
 
-            dbContext.Games.Add(game1);
-            await dbContext.SaveChangesAsync();
-            return Created($"games/{game1.Id}", game1);
-        }
+        //     if(gameToAdd != null)
+        //     {
+        //         game1.GameId = gameToAdd.id;
+        //     }
+        //     gameToAdd.id = 0;
+        //     await dbContext.SaveChangesAsync();
+        //     return Created($"games/{game1.Id}", game1);
+        // }
 
         [HttpGet("backlog/{id}")]
         public async Task<IActionResult> GetBacklogGames(int id)

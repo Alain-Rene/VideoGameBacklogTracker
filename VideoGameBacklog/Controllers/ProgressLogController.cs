@@ -51,11 +51,21 @@ namespace VideoGameBacklog.Controllers
             dbContext.SaveChanges();
             return Created("Not implemented", newLog);
         }
+        [HttpPut("{id}")]
+        public IActionResult UpdateProgressLog(int id, [FromBody] ProgressLog p)
+        {
+            if (p.LogId != id) { return BadRequest("Ids dont match"); }
+            if (dbContext.ProgressLogs.Any(c => c.LogId == id) == false) { return NotFound("No matching ids"); }
+
+            dbContext.ProgressLogs.Update(p);
+            dbContext.SaveChanges();
+            return Ok(p);
+        }
 
         [HttpPost("/DTO")]
         public IActionResult AddDTOLog([FromBody] BackLogDTO newLog)
         {
-            if (dbContext.ProgressLogs.Any(x => x.GameId == newLog.GameId))
+            if (dbContext.ProgressLogs.Any(x => (x.GameId == newLog.GameId) && (x.UserId == newLog.UserId)))
             {
                 return NoContent();
             }
@@ -85,10 +95,18 @@ namespace VideoGameBacklog.Controllers
             {
                 Status = result.Status,
                 PlayTime = result.PlayTime,
-                //Game = await _vgbService.GetGameById((int)result.GameId),
-                Game = await _vgbService.GetGameById(1942) //id for the Witcher 3. Uncomment ln 88 once we have some functionality.
+                Game = await _vgbService.GetGameById((int)result.GameId),
+        
             };
             return Ok(dto);
+        }
+        [HttpDelete()]
+        public IActionResult DeleteLog(int id)
+        {
+            ProgressLog result = dbContext.ProgressLogs.FirstOrDefault(u => u.LogId == id);
+
+            if(result == null) { return NotFound("This user cannot be found"); }
+            else { dbContext.ProgressLogs.Remove(result); dbContext.SaveChanges(); return NoContent(); }
         }
 
     }
