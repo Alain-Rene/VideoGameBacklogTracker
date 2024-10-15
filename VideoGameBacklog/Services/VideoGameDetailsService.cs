@@ -272,6 +272,10 @@ namespace Services
             return games;
         }
 
+        public async Task<int> GetGameId(GameApi game)
+        {
+            return game.id;
+        }
         
     }
 }
