@@ -13,12 +13,12 @@ export interface ProgressLog {
 export interface BackLogDTO {
     userId: number;
     gameId: number;
-    status: string;
-    playTime: number;
+    status?: string;
+    playTime?: number;
 }
 
 export interface RetrieveBackLogDTO {
-    status: string;
-    playTime: number;
+    status?: string;
+    playTime?: number;
     game: GameAPI;
 }
