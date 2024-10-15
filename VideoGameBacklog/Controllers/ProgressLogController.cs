@@ -52,6 +52,17 @@ namespace VideoGameBacklog.Controllers
             return Created("Not implemented", newLog);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateProgressLog(int id, [FromBody] ProgressLog p)
+        {
+            if (p.LogId != id) { return BadRequest("Ids dont match"); }
+            if (dbContext.ProgressLogs.Any(c => c.LogId == id) == false) { return NotFound("No matching ids"); }
+
+            dbContext.ProgressLogs.Update(p);
+            dbContext.SaveChanges();
+            return Ok(p);
+        }
+
         [HttpPost("/DTO")]
         public IActionResult AddDTOLog([FromBody] BackLogDTO newLog)
         {
@@ -85,8 +96,7 @@ namespace VideoGameBacklog.Controllers
             {
                 Status = result.Status,
                 PlayTime = result.PlayTime,
-                //Game = await _vgbService.GetGameById((int)result.GameId),
-                Game = await _vgbService.GetGameById(1942) //id for the Witcher 3. Uncomment ln 88 once we have some functionality.
+                Game = await _vgbService.GetGameById((int)result.GameId),
             };
             return Ok(dto);
         }
