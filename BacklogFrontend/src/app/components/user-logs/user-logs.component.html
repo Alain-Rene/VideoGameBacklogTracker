@@ -1,0 +1,6 @@
+<h1>Your current backlog: </h1>
+@for (l of userLogs; track $index) {
+    
+    <p>Game status: {{l.status}}</p>
+    <p>Current Playtime: {{l.playtime}}</p>
+}
