@@ -15,7 +15,5 @@ public partial class ProgressLog
 
     public int? PlayTime { get; set; }
 
-    public virtual Game? Game { get; set; }
-
     public virtual User? User { get; set; }
 }

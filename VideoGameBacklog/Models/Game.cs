@@ -4,16 +4,6 @@ using System.Text.Json.Serialization;
 
 namespace VideoGameBacklog.Models;
 
-public partial class Game
-{
-    public int Id { get; set; }
-
-    public int GameId { get; set; }
-    
-    [JsonIgnore]
-    public virtual ICollection<ProgressLog> ProgressLogs { get; set; } = new List<ProgressLog>();
-}
-
 public class GameApi
 {
     public int id { get; set; }

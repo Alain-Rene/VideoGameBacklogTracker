@@ -15,8 +15,6 @@ public partial class VideoGameBacklogDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Game> Games { get; set; }
-
     public virtual DbSet<ProgressLog> ProgressLogs { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -28,22 +26,6 @@ public partial class VideoGameBacklogDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Game>(entity =>
-        {
-            entity.HasKey(e => e.GameId).HasName("PK__games__2AB897DDF13826F8");
-
-            entity.ToTable("games");
-
-            entity.HasIndex(e => e.Id, "UQ__games__3213E83E613C67E9").IsUnique();
-
-            entity.Property(e => e.GameId)
-                .ValueGeneratedNever()
-                .HasColumnName("GameID");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("id");
-        });
-
         modelBuilder.Entity<ProgressLog>(entity =>
         {
             entity.HasKey(e => e.LogId).HasName("PK__progress__5E5499A8E49403AD");
@@ -54,10 +36,6 @@ public partial class VideoGameBacklogDbContext : DbContext
             entity.Property(e => e.GameId).HasColumnName("GameID");
             entity.Property(e => e.Status).HasMaxLength(255);
             entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.Game).WithMany(p => p.ProgressLogs)
-                .HasForeignKey(d => d.GameId)
-                .HasConstraintName("FK__progressL__GameI__4D94879B");
 
             entity.HasOne(d => d.User).WithMany(p => p.ProgressLogs)
                 .HasForeignKey(d => d.UserId)
