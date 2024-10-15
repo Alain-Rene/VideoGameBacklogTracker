@@ -238,17 +238,19 @@ namespace Services
             string userGames = "";
             foreach(ProgressLog l in logs)
             {
-                // userGames += l.GameId + ",";
-                
-            }
-
-            while(counter <= 5)
-            {
-                userGames += counter + ",";
+                userGames += l.GameId;
+                if(counter <= logs.Count())
+                {
+                    userGames += ",";
+                }
                 counter++;
             }
 
+            System.Console.WriteLine(userGames);
+
             userGames = userGames.Substring(0, userGames.Length - 1);
+
+            
 
             requestBody += $"where id = ({userGames});";
 
@@ -265,7 +267,7 @@ namespace Services
 
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
-            System.Console.WriteLine(jsonResponse);
+            // System.Console.WriteLine(jsonResponse);
             //List<GameApi> games = JsonSerializer.Deserialize<List<GameApi>>(await response.Content.ReadAsStringAsync());
             List<GameApi> games = await response.Content.ReadFromJsonAsync<List<GameApi>>();
 
