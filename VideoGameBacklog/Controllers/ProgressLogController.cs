@@ -100,6 +100,22 @@ namespace VideoGameBacklog.Controllers
             };
             return Ok(dto);
         }
+        [HttpGet("/DTO/userID/{id}")]
+
+        public async Task<IActionResult> GetDTOByUserId(int id)
+        {
+            List<GameApi> games = await _vgbService.GetGamesInBacklog(id);
+            // Select statement is automatically converting ProgressLogs into DTOs
+            List<ProgressLog> result = await dbContext.ProgressLogs.Where(l => l.UserId.HasValue && l.UserId.Value == id).ToListAsync();
+
+            List<RetrieveBackLogDTO> gameList = result.Select(l => new RetrieveBackLogDTO {
+                Status = l.Status,
+                PlayTime = l.PlayTime,
+                Game = games.FirstOrDefault(g => l.GameId.HasValue && g.id == l.GameId.Value),
+            }).ToList();
+            
+            return Ok(gameList);
+        }
         [HttpDelete()]
         public IActionResult DeleteLog(int id)
         {
