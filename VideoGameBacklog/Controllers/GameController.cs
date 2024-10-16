@@ -23,7 +23,7 @@ namespace VideoGameBacklog.Controllers
         [HttpGet]
         public async Task<IActionResult> GetGames()
         {
-            List<GameApi> result = await _videoGameDetailsService.GetGames(0, 5);
+            List<GameApi> result = await _videoGameDetailsService.GetGames(0, 10);
 
             return Ok(result);
         }
@@ -31,7 +31,7 @@ namespace VideoGameBacklog.Controllers
         [HttpGet("/filter")]
         public async Task<IActionResult> GetFilteredGames(string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
         {
-            List<GameApi> result = await _videoGameDetailsService.GetFilteredGames(0, 5, name, genre, rating, companyName, platform, releaseYear);
+            List<GameApi> result = await _videoGameDetailsService.GetFilteredGames(0, 10, name, genre, rating, companyName, platform, releaseYear);
             return Ok(result);
         }
 

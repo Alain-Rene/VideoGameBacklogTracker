@@ -25,7 +25,7 @@ namespace Services
         }
         private const string ClientID = "ff0ca20shq346e24m52cp9ozizz6ua"; // Twitch client ID
         private const string Authorization = "ll77khnf1la36uuwzx8z7e0sfzsfjm"; // Twitch access token for IGDB API
-        public async Task<List<GameApi>> GetGames(int offset, int limit = 5) //not sure if offset and limit are necessary. Limit is default 10 and prolly don't need to offset that. -DB
+        public async Task<List<GameApi>> GetGames(int offset, int limit = 10) //not sure if offset and limit are necessary. Limit is default 10 and prolly don't need to offset that. -DB
         {
             string endpoint = "games";
 
@@ -76,7 +76,7 @@ namespace Services
 
         //     requestMessage.Content = new StringContent()
         // }
-        public async Task<List<GameApi>> GetFilteredGames(int offset, int limit = 5, string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
+        public async Task<List<GameApi>> GetFilteredGames(int offset, int limit = 10, string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
         {
             string endpoint = "games";
 
@@ -139,7 +139,7 @@ namespace Services
                 }
                 else
                 {
-                    filters += $" & involved_companies.company= {companyID}";
+                    filters += $" & involved_companies.company = {companyID}";
                 }
                 counter++;
             }
