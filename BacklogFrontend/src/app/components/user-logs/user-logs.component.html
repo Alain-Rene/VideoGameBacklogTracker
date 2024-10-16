@@ -1,6 +1,10 @@
+
 <h1>Your current backlog: </h1>
 @for (l of userLogs; track $index) {
-    
+    <h2>{{l.game.name}}</h2>
+    <img [src]="l.game.cover.url" height="150px"/>
     <p>Game status: {{l.status}}</p>
-    <p>Current Playtime: {{l.playtime}}</p>
+    <p>Current Playtime: {{l.playTime}} hours</p>
+    <button>Update</button>
 }
+

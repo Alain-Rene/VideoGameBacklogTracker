@@ -27,7 +27,15 @@ export class HomeComponent {
   }
 
   getGenres(genres: Genre[]): string{
-    return genres.map(genre => genre.name).join(', ');
+    if (genres == null)
+    {
+      return "N/A";
+    }
+    else
+    {
+      return genres.map(genre => genre.name).join(', ');
+    }
+    
   }
 }
 

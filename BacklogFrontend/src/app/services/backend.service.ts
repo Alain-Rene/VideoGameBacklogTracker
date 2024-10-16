@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GameAPI } from '../models/game';
-import { ProgressLog } from '../models/progresslog';
+import { ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
 import { User } from '../models/user';
 
 @Injectable({
@@ -19,7 +19,17 @@ export class BackendService {
 
   getFilteredGames(name?:string, genre?:string, rating?:number, companyName?:string, platform?:string, releaseYear?:string):Observable<GameAPI[]>
   {
-    return this.http.get<GameAPI[]>(`${this.url}filter`);
+    // Create an object for query params
+    let params: any = {};
+
+      // Add parameters only if they have a value
+    if (name) params.name = name;
+    if (genre) params.genre = genre;
+    if (rating) params.rating = rating;
+    if (companyName) params.companyName = companyName;
+    if (platform) params.platform = platform;
+    if (releaseYear) params.releaseYear = releaseYear;
+    return this.http.get<GameAPI[]>(`${this.url}filter`, {params});
   }
 
   getGameById(id:number):Observable<GameAPI>
@@ -60,6 +70,11 @@ export class BackendService {
   getLogByIdDTO(id:number):Observable<ProgressLog>
   {
     return this.http.get<ProgressLog>(`${this.url}DTO/${id}`);
+  }
+
+  getLogByUserIdDTO(id:number):Observable<RetrieveBackLogDTO[]>
+  {
+    return this.http.get<RetrieveBackLogDTO[]>(`${this.url}DTO/userID/${id}`);
   }
 
   getUsers():Observable<User[]>

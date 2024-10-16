@@ -1,1 +1,67 @@
 <p>game-search works!</p>
+<div>
+  <!-- Name Input -->
+  <label for="name">Name:</label>
+  <input
+    type="text"
+    id="name"
+    [(ngModel)]="name"
+    placeholder="Enter game name"
+  />
+
+  <!-- Genre Input -->
+  <label for="genre">Genre:</label>
+  <input
+    type="text"
+    id="genre"
+    [(ngModel)]="genre"
+    placeholder="Enter game genre"
+  />
+
+  <!-- Rating Input -->
+  <label for="rating">Rating:</label>
+  <input
+    type="number"
+    id="rating"
+    [(ngModel)]="rating"
+    placeholder="Enter minimum rating"
+  />
+
+  <!-- Company Name Input -->
+  <label for="companyName">Company Name:</label>
+  <input
+    type="text"
+    id="companyName"
+    [(ngModel)]="companyName"
+    placeholder="Enter company name"
+  />
+
+  <!-- Platform Input -->
+  <label for="platform">Platform:</label>
+  <input
+    type="text"
+    id="platform"
+    [(ngModel)]="platform"
+    placeholder="Enter platform"
+  />
+
+  <!-- Release Year Input -->
+  <label for="releaseYear">Release Year:</label>
+  <input
+    type="text"
+    id="releaseYear"
+    [(ngModel)]="releaseYear"
+    placeholder="Enter release year"
+  />
+</div>
+
+<button (click)="filterGames()">Search</button>
+@if (filteredGames.length > 0)
+{
+    @for (g of filteredGames; track $index) {
+        <h2>{{ g.name }}</h2>
+        <img [src]="g.cover.url" />
+        <p>Rating: {{ g.rating }}</p>
+        <p>Genres: {{ getGenres(g.genres) }}</p>
+    }
+}
