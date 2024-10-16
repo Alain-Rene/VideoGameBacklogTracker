@@ -139,7 +139,7 @@ namespace Services
                 }
                 else
                 {
-                    filters += $" & involved_companies.company.name = {companyID}";
+                    filters += $" & involved_companies.company= {companyID}";
                 }
                 counter++;
             }
