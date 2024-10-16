@@ -22,7 +22,7 @@ export class UserLogsComponent {
   }
 
   getGamesById() {
-    this.backendService.getLogByUserIdDTO(1).subscribe(response => {
+    this.backendService.getLogByUserIdDTO(3).subscribe(response => {
       console.log(response);
       this.userLogs = response;
     })

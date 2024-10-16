@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { GameAPI, Genre } from '../../models/game';
 import { BackendService } from '../../services/backend.service';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BackLogDTO } from '../../models/progresslog';
 
 @Component({
   selector: 'app-game-search',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterOutlet, RouterLink],
   templateUrl: './game-search.component.html',
   styleUrl: './game-search.component.css'
 })
@@ -19,8 +21,12 @@ export class GameSearchComponent {
   companyName:string|undefined;
   platform:string|undefined;
   releaseYear:string|undefined;
+  newProgressLog:BackLogDTO = {} as BackLogDTO;
 
-  constructor(private backendService:BackendService) {}
+  constructor(
+    private backendService:BackendService,
+    private router: Router
+  ) {}
 
   filterGames(){
     this.name || undefined,
@@ -51,5 +57,12 @@ export class GameSearchComponent {
     
   }
 
+  navigateToDetails(gameId: number){
+    this.router.navigate(['details/', gameId]);
+  }
+
+  addToBacklog(){
+    this.backendService.addProgressLog(this.newProgressLog);
+  }
   
 }

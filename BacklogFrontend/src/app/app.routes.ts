@@ -5,8 +5,8 @@ import { GameSearchComponent } from './components/game-search/game-search.compon
 import { GameDetailsComponent } from './components/game-details/game-details.component';
 
 export const routes: Routes = [
-    {path:"Backlog/:id", component:UserLogsComponent},
+    {path:"backlog/:id", component:UserLogsComponent},
     {path:"", component:HomeComponent},
-    {path:"Search", component:GameSearchComponent},
-    {path:"Details/:id",component:GameDetailsComponent}
+    {path:"search", component:GameSearchComponent},
+    {path:"details/:id",component:GameDetailsComponent}
 ];

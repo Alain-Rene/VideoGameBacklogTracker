@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GameAPI } from '../models/game';
-import { ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
+import { GameAPI, Genre, Platform } from '../models/game';
+import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
 import { User } from '../models/user';
 
 @Injectable({
@@ -62,7 +62,7 @@ export class BackendService {
     return this.http.put<ProgressLog>(`${this.url}api/ProgressLog/${p.logID}`, p);
   }
 
-  addProgressLog(p:ProgressLog):Observable<ProgressLog>
+  addProgressLog(p:BackLogDTO):Observable<ProgressLog>
   {
     return this.http.post<ProgressLog>(`${this.url}DTO`, p);
   }
@@ -101,7 +101,16 @@ export class BackendService {
   {
     return this.http.put<User>(`${this.url}api/Users/${u.id}`, u);
   }
+  
 
+  getPlatforms(platforms: Platform[]): string{
+    if (platforms == null){
+      return "N/A";
+    }
+    else{
+      return platforms.map(platform => platform.name).join(', ');
+    }
+  }
 
 
 }
