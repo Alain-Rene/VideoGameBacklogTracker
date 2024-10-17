@@ -1,11 +1,35 @@
-
-<h1>Your current backlog: </h1>
+<h1>Your current backlog:</h1>
 @for (l of userLogs; track $index) {
-    <h2>{{l.game.name}}</h2>
-    <img [src]="l.game.cover.url" height="150px"/>
-    <p>Game status: {{l.status}}</p>
-    <p>Current Playtime: {{l.playTime}} hours</p>
-    <button (click)="updateGame(l)">Update</button>
-    <button class="links" (click)="navigateToDetails(l.game.id)" >Game details</button>
-}
+    <h2>{{ l.game.name }}</h2>
+    <img [src]="l.game.cover.url" height="150px" />
+    <p>Game status: {{ l.status }}</p>
+    <p>Current Playtime: {{ l.playTime }} hours</p>
+    <button (click)="displayToggle($index)">Update</button>
+    @if (display) {
+        <br>
+        Status:
+        <label for="notStarted{{$index}}">Not Started
+        <input type="radio" id="notStarted{{$index}}" [(ngModel)]="l.status" value="Not Started"/>
+        </label>
 
+        <label for="inProgress{{$index}}">In-Progress
+        <input type="radio" id="inProgress{{$index}}" [(ngModel)]="l.status" value="In-Progress" />
+        </label>
+
+        <label for="complete{{$index}}">Complete
+        <input type="radio" id="complete{{$index}}" [(ngModel)]="l.status" value="Complete"/>
+        </label>
+
+        <br>
+        <label for="playTime{{$index}}">Play Time:</label>
+        <input type="number" id="playTime{{$index}}" [(ngModel)]="l.playTime" placeholder="Enter current playtime" />
+        <br>
+        <button (click)="updateGame(l)">Submit Update</button>
+        <br>
+        }
+
+        
+        <button class="links" (click)="navigateToDetails(l.game.id)">
+            Game details
+        </button>
+}

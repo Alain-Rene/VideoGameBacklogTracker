@@ -14,9 +14,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserLogsComponent {
   loggedIn: boolean = false;
+  display: boolean[] = [];
   userLogs:RetrieveBackLogDTO[] = [];
   allLogs:ProgressLog[] = [];
   userGames: GameAPI[] = [];
+  updatedGame = {} as RetrieveBackLogDTO;
   test:BackLogDTO = {} as BackLogDTO;
 
   constructor(
@@ -32,6 +34,7 @@ export class UserLogsComponent {
     this.backendService.getLogByUserIdDTO(3).subscribe(response => {
       console.log(response);
       this.userLogs = response;
+      this.display = new Array(this.userLogs.length).fill(false); // Initialize the display array
     })
   }
 
@@ -47,6 +50,10 @@ export class UserLogsComponent {
       updatedLog.status = response.status;
 
     });
+  }
+
+  displayToggle(index:number){
+    this.display[index] = !this.display[index];
   }
 
 
