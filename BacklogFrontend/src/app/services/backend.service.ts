@@ -9,8 +9,8 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class BackendService {
-  url:string = "http://localhost:5264/"; //ALAIN
-  // url:string = "https://localhost:7242/"; //David
+  // url:string = "http://localhost:5264/"; //ALAIN
+  url:string = "https://localhost:7242/"; //David
   constructor(private http:HttpClient) { }
 
   getGames():Observable<GameAPI[]>
