@@ -5,26 +5,28 @@
     <p>Game status: {{ l.status }}</p>
     <p>Current Playtime: {{ l.playTime }} hours</p>
     <button (click)="displayToggle($index)">Update</button>
-    @if (display) {
+    @if (display[$index]) {
+        <p>Game ID: {{l.game.id}}</p>
+        <p>Index: {{$index}}</p>
         <br>
         Status:
         <label for="notStarted{{$index}}">Not Started
-        <input type="radio" id="notStarted{{$index}}" [(ngModel)]="l.status" value="Not Started"/>
+        <input type="radio" id="notStarted{{$index}}" [(ngModel)]="userLogs[$index].status" value="Not Started"/>
         </label>
 
         <label for="inProgress{{$index}}">In-Progress
-        <input type="radio" id="inProgress{{$index}}" [(ngModel)]="l.status" value="In-Progress" />
+        <input type="radio" id="inProgress{{$index}}" [(ngModel)]="userLogs[$index].status" value="In-Progress" />
         </label>
 
         <label for="complete{{$index}}">Complete
-        <input type="radio" id="complete{{$index}}" [(ngModel)]="l.status" value="Complete"/>
+        <input type="radio" id="complete{{$index}}" [(ngModel)]="userLogs[$index].status" value="Complete"/>
         </label>
 
         <br>
         <label for="playTime{{$index}}">Play Time:</label>
-        <input type="number" id="playTime{{$index}}" [(ngModel)]="l.playTime" placeholder="Enter current playtime" />
+        <input type="number" id="playTime{{$index}}" [(ngModel)]="userLogs[$index].playTime" placeholder="Enter current playtime" />
         <br>
-        <button (click)="updateGame(l)">Submit Update</button>
+        <button (click)="updateGame(userLogs[$index])">Submit Update</button>
         <br>
         }
 

@@ -44,16 +44,20 @@ export class UserLogsComponent {
 
   updateGame(updatedLog:RetrieveBackLogDTO){
     this.test.gameId = updatedLog.game.id;
+    this.test.status = updatedLog.status;
+    this.test.playTime = updatedLog.playTime;
     this.backendService.updateProgressLog(3, this.test).subscribe(response => {
       console.log(response);
       updatedLog.playTime = response.playtime;
       updatedLog.status = response.status;
 
     });
+    this.getGamesById();
   }
 
   displayToggle(index:number){
     this.display[index] = !this.display[index];
+    this.updatedGame.game.id = this.userLogs[index].game.id;
   }
 
 
