@@ -6,8 +6,7 @@
     <p>Current Playtime: {{ l.playTime }} hours</p>
     <button (click)="displayToggle($index)">Update</button>
     @if (display[$index]) {
-        <p>Game ID: {{l.game.id}}</p>
-        <p>Index: {{$index}}</p>
+
         <br>
         Status:
         <label for="notStarted{{$index}}">Not Started

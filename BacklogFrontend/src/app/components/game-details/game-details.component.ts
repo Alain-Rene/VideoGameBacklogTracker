@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GameAPI, Genre, InvolvedCompany, Platform, ReleaseDate } from '../../models/game';
 import { BackendService } from '../../services/backend.service';
 import { ActivatedRoute } from '@angular/router';
+import { BackLogDTO } from '../../models/progresslog';
 
 @Component({
   selector: 'app-game-details',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameDetailsComponent {
   currentGame: GameAPI = {} as GameAPI;
+  newProgressLog:BackLogDTO = {} as BackLogDTO;
 
   constructor(
     private backendService: BackendService,
@@ -89,5 +91,13 @@ export class GameDetailsComponent {
       }
     });
     return result;
+  }
+  addToBacklog(userId:number, gameId:number){
+    this.newProgressLog.gameId = gameId;
+    this.newProgressLog.userId = userId;
+    console.log(this.newProgressLog);
+    this.backendService.addProgressLog(this.newProgressLog).subscribe(response => {
+      console.log(response);
+    });
   }
 }

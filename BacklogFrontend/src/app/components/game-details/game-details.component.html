@@ -1,4 +1,3 @@
-<p>game-details works!</p>
 <body>
     <h1>{{currentGame.name}}</h1>
     <img [src]="currentGame.cover.url" />
@@ -10,5 +9,5 @@
     </p>
     <p>Summary:</p>
     <p>{{currentGame.summary}}</p>
-
+    <button (click)="addToBacklog(3, currentGame.id)">Add to backlog</button>
 </body>
