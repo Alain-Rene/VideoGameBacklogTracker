@@ -1,21 +1,28 @@
 import { Component } from '@angular/core';
 import { GameAPI } from '../../models/game';
 import { BackendService } from '../../services/backend.service';
-import { ProgressLog, RetrieveBackLogDTO } from '../../models/progresslog';
+import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../../models/progresslog';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-logs',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './user-logs.component.html',
   styleUrl: './user-logs.component.css'
 })
 export class UserLogsComponent {
   loggedIn: boolean = false;
   userLogs:RetrieveBackLogDTO[] = [];
+  allLogs:ProgressLog[] = [];
   userGames: GameAPI[] = [];
+  test:BackLogDTO = {} as BackLogDTO;
 
-  constructor(private backendService:BackendService) {}
+  constructor(
+    private backendService:BackendService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getGamesById();
@@ -28,6 +35,19 @@ export class UserLogsComponent {
     })
   }
 
+  navigateToDetails(gameId: number){
+    this.router.navigate(['details/', gameId]);
+  }
+
+  updateGame(updatedLog:RetrieveBackLogDTO){
+    this.test.gameId = updatedLog.game.id;
+    this.backendService.updateProgressLog(3, this.test).subscribe(response => {
+      console.log(response);
+      updatedLog.playTime = response.playtime;
+      updatedLog.status = response.status;
+
+    });
+  }
 
 
 

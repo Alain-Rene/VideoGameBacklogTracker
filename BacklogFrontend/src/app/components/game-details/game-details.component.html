@@ -1,1 +1,14 @@
 <p>game-details works!</p>
+<body>
+    <h1>{{currentGame.name}}</h1>
+    <img [src]="currentGame.cover.url" />
+    <p> Genres: {{getGenres(currentGame.genres)}}</p>
+    <p>Rating: {{currentGame.rating}}</p>
+    <p> Platforms: {{getPlatforms(currentGame.platforms)}}</p>
+    <p> Involved Companies: {{getCompanies(currentGame.involved_companies)}}</p>
+    <p>Release Date: {{getEarliestDate(currentGame.release_dates).toDateString()}}
+    </p>
+    <p>Summary:</p>
+    <p>{{currentGame.summary}}</p>
+
+</body>

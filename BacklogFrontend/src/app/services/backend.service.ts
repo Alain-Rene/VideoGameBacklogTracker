@@ -57,9 +57,9 @@ export class BackendService {
     return this.http.get<ProgressLog>(`${this.url}api/ProgressLog/${id}`);
   }
 
-  updateProgressLog(p:ProgressLog):Observable<ProgressLog>
+  updateProgressLog(id:number, dto:BackLogDTO):Observable<ProgressLog>
   {
-    return this.http.put<ProgressLog>(`${this.url}api/ProgressLog/${p.logID}`, p);
+    return this.http.put<ProgressLog>(`${this.url}DTO/${id}`, dto);
   }
 
   addProgressLog(p:BackLogDTO):Observable<ProgressLog>
@@ -102,15 +102,6 @@ export class BackendService {
     return this.http.put<User>(`${this.url}api/Users/${u.id}`, u);
   }
   
-
-  getPlatforms(platforms: Platform[]): string{
-    if (platforms == null){
-      return "N/A";
-    }
-    else{
-      return platforms.map(platform => platform.name).join(', ');
-    }
-  }
 
 
 }

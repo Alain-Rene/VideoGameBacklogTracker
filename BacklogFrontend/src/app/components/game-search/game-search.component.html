@@ -63,7 +63,7 @@
         <img [src]="g.cover.url" />
         <p>Rating: {{ g.rating }}</p>
         <p>Genres: {{ getGenres(g.genres) }}</p>
-        <button onclick="">Add to backlog</button>
+        <button (click)="addToBacklog(3, g.id)">Add to backlog</button>
         <button class="links" (click)="navigateToDetails(g.id)" >Game details</button>
         
     }

@@ -117,6 +117,19 @@ namespace VideoGameBacklog.Controllers
             
             return Ok(gameList);
         }
+        [HttpPut("/DTO/{id}")]
+        public async Task<IActionResult> UpdateProgressLogDTO(int id, [FromBody] BackLogDTO updatedLog)
+        {
+            ProgressLog p = dbContext.ProgressLogs.FirstOrDefault(p => p.UserId == id && p.GameId == updatedLog.GameId );
+
+            p.Status = updatedLog.Status;
+            p.PlayTime = updatedLog.PlayTime;
+
+            dbContext.ProgressLogs.Update(p);
+            dbContext.SaveChanges();
+
+            return Ok(p);
+        }
         [HttpDelete()]
         public IActionResult DeleteLog(int id)
         {

@@ -6,7 +6,7 @@ export interface ProgressLog {
     userID: number;
     gameID: number;
     status: string;
-    playtime: string;
+    playtime: number;
     user: User;
 }
 

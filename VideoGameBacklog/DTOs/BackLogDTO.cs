@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 using VideoGameBacklog.Models;
 
 namespace VideoGameBacklog.DTOs
@@ -21,6 +22,8 @@ namespace VideoGameBacklog.DTOs
         public string? Status { get; set; }
 
         public int? PlayTime { get; set; }
+        
+        [JsonIgnore]
         public GameApi? Game {  get; set; }
     }
 }

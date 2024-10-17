@@ -61,8 +61,13 @@ export class GameSearchComponent {
     this.router.navigate(['details/', gameId]);
   }
 
-  addToBacklog(){
-    this.backendService.addProgressLog(this.newProgressLog);
+  addToBacklog(userId:number, gameId:number){
+    this.newProgressLog.gameId = gameId;
+    this.newProgressLog.userId = userId;
+    console.log(this.newProgressLog);
+    this.backendService.addProgressLog(this.newProgressLog).subscribe(response => {
+      console.log(response);
+    });
   }
   
 }
