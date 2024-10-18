@@ -5,7 +5,7 @@ export interface GameAPI {
     involved_companies: InvolvedCompany[];
     name:               string;
     platforms:          Platform[];
-    rating:             number;
+    total_rating:             number;
     release_dates:      ReleaseDate[];
     summary:            string;
 }
@@ -38,4 +38,12 @@ export interface Platform{
 export interface ReleaseDate {
     id:    number;
     human: string;
+}
+
+export interface GameVideo{
+    id: number;
+    game: number;
+    name: string;
+    video_id: string;
+    checksum: string;
 }

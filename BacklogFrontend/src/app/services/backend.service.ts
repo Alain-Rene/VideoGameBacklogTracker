@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GameAPI, Genre, Platform } from '../models/game';
+import { GameAPI, GameVideo, Genre, Platform } from '../models/game';
 import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
 import { User } from '../models/user';
 
@@ -103,6 +103,11 @@ export class BackendService {
     return this.http.put<User>(`${this.url}api/Users/${u.id}`, u);
   }
   
+  //videos
+  getGameVideosByGameId(id:number):Observable<GameVideo[]>
+  {
+    return this.http.get<GameVideo[]>(`${this.url}api/Game/game_videos/${id}`)
+  }
 
 
 }

@@ -20,11 +20,11 @@
   />
 
   <!-- Rating Input -->
-  <label for="rating">Rating:</label>
+  <label for="total_rating">Total Rating:</label>
   <input
     type="number"
     id="rating"
-    [(ngModel)]="rating"
+    [(ngModel)]="total_rating"
     placeholder="Enter minimum rating"
   />
 
@@ -62,9 +62,9 @@
     @for (g of filteredGames; track $index) {
         <h2>{{ g.name }}</h2>
         <img [src]="g.cover.url" />
-        <p>Rating: {{ g.rating }}</p>
+        <p>Rating: {{ g.total_rating }}</p>
         <p>Genres: {{ getGenres(g.genres) }}</p>
-        <button (click)="addToBacklog(3, g.id)">Add to backlog</button>
+        <button (click)="addToBacklog(1, g.id)">Add to backlog</button>
         <button class="links" (click)="navigateToDetails(g.id)" >Game details</button>
         
     }

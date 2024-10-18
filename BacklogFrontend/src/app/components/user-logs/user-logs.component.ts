@@ -31,7 +31,7 @@ export class UserLogsComponent {
   }
 
   getGamesById() {
-    this.backendService.getLogByUserIdDTO(3).subscribe(response => {
+    this.backendService.getLogByUserIdDTO(1).subscribe(response => {
       console.log(response);
       this.userLogs = response;
       this.display = new Array(this.userLogs.length).fill(false); // Initialize the display array
@@ -46,7 +46,7 @@ export class UserLogsComponent {
     this.test.gameId = updatedLog.game.id;
     this.test.status = updatedLog.status;
     this.test.playTime = updatedLog.playTime;
-    this.backendService.updateProgressLog(3, this.test).subscribe(response => {
+    this.backendService.updateProgressLog(1, this.test).subscribe(response => {
       console.log(response);
       updatedLog.playTime = response.playtime;
       updatedLog.status = response.status;

@@ -1,0 +1,22 @@
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 16px; /* Space between grid items */
+    justify-items: center; /* Center items horizontally */
+    margin: 20px; /* Margin around the container */
+  }
+  
+  .youtube-player {
+    width: 100%; /* Ensure the player takes the full width of the grid item */
+    height: 200px; /* Set a fixed height for the video player */
+    border-radius: 8px; /* Optional: rounded corners */
+    overflow: hidden; /* Ensure any overflow is hidden */
+  }
+  
+  .youtube-player.active-video {
+    height: 400px; /* Increase height when active */
+  }
+  
+.show-more {
+    margin-top: 10px;
+  }

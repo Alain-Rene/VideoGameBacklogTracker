@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
-import { GameAPI, Genre, InvolvedCompany, Platform, ReleaseDate } from '../../models/game';
+import { GameAPI, GameVideo, Genre, InvolvedCompany, Platform, ReleaseDate } from '../../models/game';
 import { BackendService } from '../../services/backend.service';
 import { ActivatedRoute } from '@angular/router';
 import { BackLogDTO } from '../../models/progresslog';
+import { YoutubePlayerComponent } from '../youtube-player/youtube-player.component';
 
 @Component({
   selector: 'app-game-details',
   standalone: true,
-  imports: [],
+  imports: [YoutubePlayerComponent],
   templateUrl: './game-details.component.html',
   styleUrl: './game-details.component.css',
 })
 export class GameDetailsComponent {
   currentGame: GameAPI = {} as GameAPI;
   newProgressLog:BackLogDTO = {} as BackLogDTO;
+  currentGameVideos: GameVideo[] = {} as GameVideo[];
+  showMore: Boolean = false;
 
   constructor(
     private backendService: BackendService,
@@ -32,8 +35,22 @@ export class GameDetailsComponent {
         console.log(response);
         this.currentGame = response;
       });
+
+      this.backendService.getGameVideosByGameId(id).subscribe((response) => {
+        console.log(response);
+        this.currentGameVideos = response;
+      })
     });
   }
+
+  toggleShowMore(){
+    this.showMore = !this.showMore;
+  }
+  activeVideoIndex: number | null = null;
+
+playVideo(index: number) {
+  this.activeVideoIndex = index;
+}
 
   getGenres(genres: Genre[]): string {
     if (genres == null) {
