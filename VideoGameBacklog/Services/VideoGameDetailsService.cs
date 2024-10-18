@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -29,9 +30,9 @@ namespace Services
         {
             string endpoint = "games";
 
-            string requestBody = "fields name, genres.name, summary, rating, " +
-                     "platforms.name, franchise, involved_companies.company.name, cover.url; " +
-                     $"sort rating desc; limit {limit}; offset {offset};";
+            string requestBody = "fields name, genres.name, summary, total_rating," +
+                     "platforms.name, release_dates.human, similar_games, involved_companies.company.name, cover.url;" +
+                     $"sort total_rating desc; limit {limit}; offset {offset}; where category = (0, 8, 9) & aggregated_rating != null & total_rating_count > 50;";
 
             // string JsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
             // HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint);
@@ -49,38 +50,21 @@ namespace Services
 
 
             string jsonResponse = await response.Content.ReadAsStringAsync();
+            System.Console.WriteLine();
 
             System.Console.WriteLine(jsonResponse);
             //List<GameApi> games = JsonSerializer.Deserialize<List<GameApi>>(await response.Content.ReadAsStringAsync());
             List<GameApi> games = await response.Content.ReadFromJsonAsync<List<GameApi>>();
 
+           
             return games;
         }
 
-        // public async Task<Game> GetFilteredGames()
-        // {
-        //     // Specifies the endpoint
-        //     string endpoint = "games";
-
-        //     string requestBody = "fields name, genres, summary, release_dates.date, " +
-        //      "rating, platforms.name, franchise, involved_companies.company.name, cover.url";
-
-        //     HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint);
-
-        //     requestMessage.Headers.Add("Client-ID", ClientID);
-        //     requestMessage.Headers.Add("Authorization", "Bearer " + Authorization);
-
-        //     List<string> filters = new List<string>();
-
-
-
-        //     requestMessage.Content = new StringContent()
-        // }
         public async Task<List<GameApi>> GetFilteredGames(int offset, int limit = 10, string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, rating, involved_companies.company.name, platforms.name,release_dates.human, cover.url; limit {limit}; offset {offset};";
+            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name,release_dates.human, cover.url; limit {limit}; offset {offset};";
 
             // string JsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
             // HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint);
@@ -109,11 +93,11 @@ namespace Services
             {
                 if(counter == 0)
                 {
-                    filters += $"rating >= {rating}";
+                    filters += $"total_rating >= {rating}";
                 }
                 else
                 {
-                    filters += $" & rating >= {rating}";
+                    filters += $" & total_rating >= {rating}";
                 }
                 counter++;
             }
@@ -205,7 +189,7 @@ namespace Services
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, rating, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
+            string requestBody = $"fields name, genres.name, summary, total_rating, similar_games, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
 
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
             {
@@ -224,11 +208,61 @@ namespace Services
 
             return games.FirstOrDefault();
         }
+         public async Task<List<GameApi>> GetSimilarGamesById(int id)
+        {
+            string endpoint = "games";
+
+            string requestBody = $"fields similar_games; where id = {id};";
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
+            {
+                Content = new StringContent(requestBody, Encoding.UTF8, "text/plain")
+            };
+
+            HttpResponseMessage response = await _httpClient.SendAsync(requestMessage);
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+
+            System.Console.WriteLine(jsonResponse);
+            //List<GameApi> games = JsonSerializer.Deserialize<List<GameApi>>(await response.Content.ReadAsStringAsync());
+            List<GameApi> games = await response.Content.ReadFromJsonAsync<List<GameApi>>();
+            
+            int[] similarGameIDs = games.FirstOrDefault().similar_games;
+            string similarGames = "";
+            int counter = 1;
+            foreach (int i in similarGameIDs)
+            {
+                similarGames += i.ToString();
+                 if(counter <= similarGameIDs.Count())
+                {
+                    similarGames += ",";
+                }
+            }
+
+            similarGames = similarGames.Substring(0, similarGames.Length - 1);
+            System.Console.WriteLine(similarGames);
+
+            string requestBodySimilar = $"fields name, genres.name, total_rating, cover.url; where id = ({similarGames});";
+             HttpRequestMessage requestMessageSimilar = new HttpRequestMessage(HttpMethod.Post, endpoint)
+            {
+                Content = new StringContent(requestBodySimilar, Encoding.UTF8, "text/plain")
+            };
+
+            HttpResponseMessage responseNew = await _httpClient.SendAsync(requestMessageSimilar);
+
+             string jsonResponseNew = await responseNew.Content.ReadAsStringAsync();
+
+            System.Console.WriteLine(jsonResponseNew);
+            List<GameApi> allGames = await responseNew.Content.ReadFromJsonAsync<List<GameApi>>();
+
+            return allGames;
+
+        }
         public async Task<List<GameApi>> GetGamesInBacklog(int id)
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, rating, involved_companies.company.name, franchise, platforms.name,release_dates.human, cover.url;"; 
+            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, franchise, platforms.name,release_dates.human, cover.url;"; 
 
             User u = dbContext.Users.FirstOrDefault(x => x.Id == id);
 

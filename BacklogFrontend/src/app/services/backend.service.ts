@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GameAPI, Genre, Platform } from '../models/game';
 import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ import { User } from '../models/user';
 export class BackendService {
   url:string = "http://localhost:5264/"; //ALAIN
   // url:string = "https://localhost:7242/"; //David
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http:HttpClient,
+    private router: Router
+    ) { }
 
   getGames():Observable<GameAPI[]>
   {
@@ -36,6 +40,11 @@ export class BackendService {
   getGameById(id:number):Observable<GameAPI>
   {
     return this.http.get<GameAPI>(`${this.url}api/Game/${id}`);
+  }
+
+  getSimilarGamesById(id:number):Observable<GameAPI[]>
+  {
+    return this.http.get<GameAPI[]>(`${this.url}similar/${id}`);
   }
 
   getBacklogGamesByUserId(id:number):Observable<GameAPI[]>
@@ -101,6 +110,10 @@ export class BackendService {
   updateUser(u:User):Observable<User>
   {
     return this.http.put<User>(`${this.url}api/Users/${u.id}`, u);
+  }
+
+  navigateToDetails(gameId: number){
+    this.router.navigate(['details/', gameId]);
   }
   
 

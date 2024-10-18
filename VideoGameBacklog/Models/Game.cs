@@ -12,8 +12,9 @@ public class GameApi
     public Involved_Companies[] involved_companies { get; set; }
     public string name { get; set; }
     public Platform[] platforms { get; set; }
-    public float rating { get; set; }
+    public float total_rating { get; set; }
     public Release_Dates[] release_dates { get; set; }
+    public int[] similar_games { get; set; }
     public string summary { get; set; }
 }
 public class Cover

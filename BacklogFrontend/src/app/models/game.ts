@@ -5,7 +5,7 @@ export interface GameAPI {
     involved_companies: InvolvedCompany[];
     name:               string;
     platforms:          Platform[];
-    rating:             number;
+    total_rating:       number;
     release_dates:      ReleaseDate[];
     summary:            string;
 }

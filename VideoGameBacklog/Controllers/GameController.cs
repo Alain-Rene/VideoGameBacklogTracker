@@ -41,6 +41,13 @@ namespace VideoGameBacklog.Controllers
             GameApi result = await _videoGameDetailsService.GetGameById(id);
             return Ok(result);
         }
+        [HttpGet("/similar/{id}")]
+        public async Task<IActionResult> GetSimilarGames(int id)
+        {
+            List<GameApi> result = await _videoGameDetailsService.GetSimilarGamesById(id);
+
+            return Ok(result);
+        }
 
         // [HttpPost]
         // public async Task<IActionResult> AddGame([FromBody]GameApi game)
@@ -60,6 +67,8 @@ namespace VideoGameBacklog.Controllers
         //     await dbContext.SaveChangesAsync();
         //     return Created($"games/{game1.Id}", game1);
         // }
+
+        
 
         [HttpGet("backlog/{id}")]
         public async Task<IActionResult> GetBacklogGames(int id)

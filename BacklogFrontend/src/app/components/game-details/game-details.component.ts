@@ -14,6 +14,7 @@ import { BackLogDTO } from '../../models/progresslog';
 export class GameDetailsComponent {
   currentGame: GameAPI = {} as GameAPI;
   newProgressLog:BackLogDTO = {} as BackLogDTO;
+  similarGames:GameAPI[] = [];
 
   constructor(
     private backendService: BackendService,
@@ -22,6 +23,7 @@ export class GameDetailsComponent {
 
   ngOnInit() {
     this.displayGameInfo();
+    this.getSimilarGames();
   }
 
   displayGameInfo() {
@@ -42,6 +44,15 @@ export class GameDetailsComponent {
       return genres.map((genre) => genre.name).join(', ');
     }
   }
+  getOneGenre(genres: Genre[]): string {
+    if (genres == null){
+      return '';
+    }
+    else {
+      return genres[0].name;
+    }
+
+  }
 
   getPlatforms(platforms: Platform[]): string {
     if (platforms == null) {
@@ -59,9 +70,18 @@ export class GameDetailsComponent {
     }
   }
 
+  getUpdatedImage(url:string): string{
+    return url.replace("t_thumb", "t_original");
+  }
+
   //Takes in string date, converts to Date datatype
-  parseDate(dateStr: string): Date {
+  parseDate(dateStr: string): Date | number{
     let values: string[] = dateStr.split(' ');
+
+    if(values.length === 1) {
+      let year: number = Number(values[0]);
+      return Number(values[0]);
+    }
     let monthValues: string[] = [
       'Jan',
       'Feb',
@@ -82,15 +102,31 @@ export class GameDetailsComponent {
     return new Date(year, month, day); // Add a space after the comma
   }
   //takes in array of dates (Api's format) and returns earliest Date
-  getEarliestDate(values: ReleaseDate[]): Date {
-    let result: Date = this.parseDate(values[0].human);
+  getEarliestDate(values: ReleaseDate[]): Date | number {
+    let result: Date | number = this.parseDate(values[0].human);
     values.forEach((d) => {
-      let newDate: Date = this.parseDate(d.human);
-      if (newDate < result) {
-        result = newDate;
+      let newDate: Date | number = this.parseDate(d.human);
+      if (typeof newDate === 'number') {
+        // If it's a year only date
+        if (result === null || (typeof result === 'number' && newDate < result)) {
+          result = newDate;
+        }
+      } else {
+        if (result === null || (typeof result === 'number') ||newDate < result) {
+          result = newDate;
+        }
       }
+      
     });
     return result;
+  }
+  isDateInstance(releaseDate: Date | number): string {
+    if (releaseDate instanceof Date){
+      return releaseDate.toDateString();
+    }
+    else {
+      return releaseDate.toString();
+    }
   }
   addToBacklog(userId:number, gameId:number){
     this.newProgressLog.gameId = gameId;
@@ -99,5 +135,19 @@ export class GameDetailsComponent {
     this.backendService.addProgressLog(this.newProgressLog).subscribe(response => {
       console.log(response);
     });
+  }
+
+  getSimilarGames(){
+    this.activatedRoute.paramMap.subscribe((params) => {
+      let id: number = Number(params.get('id'));
+      this.backendService.getSimilarGamesById(id).subscribe(response => {
+        console.log(response);
+        this.similarGames = response;
+      })
+    })
+  }
+
+  goToDetails(gameId:number){
+    this.backendService.navigateToDetails(gameId);
   }
 }

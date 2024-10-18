@@ -1,13 +1,30 @@
 <body>
     <h1>{{currentGame.name}}</h1>
-    <img [src]="currentGame.cover.url" />
+    <img [src]="getUpdatedImage(currentGame.cover.url)" class="current-img"/>
     <p> Genres: {{getGenres(currentGame.genres)}}</p>
-    <p>Rating: {{currentGame.rating}}</p>
+    <p>Rating: {{currentGame.total_rating}}</p>
     <p> Platforms: {{getPlatforms(currentGame.platforms)}}</p>
     <p> Involved Companies: {{getCompanies(currentGame.involved_companies)}}</p>
-    <p>Release Date: {{getEarliestDate(currentGame.release_dates).toDateString()}}
-    </p>
+    <p>Release Date: {{ isDateInstance(getEarliestDate(currentGame.release_dates)) }}</p>
+
+
+    
     <p>Summary:</p>
     <p>{{currentGame.summary}}</p>
     <button (click)="addToBacklog(3, currentGame.id)">Add to backlog</button>
+
+    <h2>Similar Games</h2>
+    <div class="similar-games-container">
+        @for (g of similarGames; track $index) {
+        <div class="similar-game card">
+            <img [src]="g.cover.url" class="card-img-top" (click)="goToDetails(g.id)" alt="{{g.name}}" />
+            <div class="card-body">
+                <h5 class="card-title">{{g.name}}</h5>
+                <p class="card-text">{{g.total_rating}}</p>
+                <p class="card-text">{{getOneGenre(g.genres)}}</p>
+            </div>
+        </div>
+        }
+        
+    </div>
 </body>

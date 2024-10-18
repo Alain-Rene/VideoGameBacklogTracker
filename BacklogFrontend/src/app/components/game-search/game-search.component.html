@@ -62,7 +62,7 @@
     @for (g of filteredGames; track $index) {
         <h2>{{ g.name }}</h2>
         <img [src]="g.cover.url" />
-        <p>Rating: {{ g.rating }}</p>
+        <p>Rating: {{ g.total_rating }}</p>
         <p>Genres: {{ getGenres(g.genres) }}</p>
         <button (click)="addToBacklog(3, g.id)">Add to backlog</button>
         <button class="links" (click)="navigateToDetails(g.id)" >Game details</button>
