@@ -14,6 +14,7 @@ public class GameApi
     public Platform[] platforms { get; set; }
     public double total_rating { get; set; }
     public Release_Dates[] release_dates { get; set; }
+    public int[] similar_games { get; set; }
     public string summary { get; set; }
 }
 public class Cover
