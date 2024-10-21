@@ -94,11 +94,11 @@ namespace Services
             {
                 if(counter == 0)
                 {
-                    filters += $"rating >= {total_rating}";
+                    filters += $"total_rating >= {total_rating}";
                 }
                 else
                 {
-                    filters += $" & rating >= {total_rating}";
+                    filters += $" & total_rating >= {total_rating}";
                     //filters += $"total_rating >= {rating}";
                 }
                 //else
