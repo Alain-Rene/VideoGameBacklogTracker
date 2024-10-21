@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\16167\\source\\repos\\VideoGameBacklogTracker\\VideoGameBacklog\\VideoGameBacklog.csproj": {}
+    "/Users/alainrene/Desktop/FinalProjectGC/VideoGameBacklog/VideoGameBacklog.csproj": {}
   },
   "projects": {
-    "C:\\Users\\16167\\source\\repos\\VideoGameBacklogTracker\\VideoGameBacklog\\VideoGameBacklog.csproj": {
+    "/Users/alainrene/Desktop/FinalProjectGC/VideoGameBacklog/VideoGameBacklog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\16167\\source\\repos\\VideoGameBacklogTracker\\VideoGameBacklog\\VideoGameBacklog.csproj",
+        "projectUniqueName": "/Users/alainrene/Desktop/FinalProjectGC/VideoGameBacklog/VideoGameBacklog.csproj",
         "projectName": "VideoGameBacklog",
-        "projectPath": "C:\\Users\\16167\\source\\repos\\VideoGameBacklogTracker\\VideoGameBacklog\\VideoGameBacklog.csproj",
-        "packagesPath": "C:\\Users\\16167\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\16167\\source\\repos\\VideoGameBacklogTracker\\VideoGameBacklog\\obj\\",
+        "projectPath": "/Users/alainrene/Desktop/FinalProjectGC/VideoGameBacklog/VideoGameBacklog.csproj",
+        "packagesPath": "/Users/alainrene/.nuget/packages/",
+        "outputPath": "/Users/alainrene/Desktop/FinalProjectGC/VideoGameBacklog/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\16167\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/alainrene/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -88,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
