@@ -4,6 +4,7 @@ declare var YT: any; // Declare YT to avoid TypeScript errors
 
 @Component({
   selector: 'app-youtube-player',
+  standalone: true,
   template: '<div #player></div>', // Create a placeholder for the player
   styleUrls: ['./youtube-player.component.css']
 })
@@ -13,26 +14,33 @@ export class YoutubePlayerComponent implements OnInit {
   player: any; // YouTube player instance
 
   ngOnInit(): void {
-    this.loadYouTubeAPI();
+    if (!window['YT']) {
+      this.loadYouTubeAPI();
+    } else {
+      this.createPlayer();
+    }
+  }
+
+  createPlayer() {
+    this.player = new YT.Player(this.playerElement.nativeElement, {
+      height: '390',
+      width: '640',
+      videoId: this.videoId,
+      events: {
+        'onReady': this.onPlayerReady.bind(this),
+        'onStateChange': this.onPlayerStateChange.bind(this),
+      },
+    });
   }
 
   loadYouTubeAPI() {
     const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api'; // Load the API script
+    tag.src = 'https://www.youtube.com/iframe_api';
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode!.insertBefore(tag, firstScriptTag);
-
-    // Create the player once the API is ready
+    
     window.onYouTubeIframeAPIReady = () => {
-      this.player = new YT.Player(this.playerElement.nativeElement, {
-        height: '390',
-        width: '640',
-        videoId: this.videoId, // Use the passed video ID
-        events: {
-          'onReady': this.onPlayerReady.bind(this),
-          'onStateChange': this.onPlayerStateChange.bind(this)
-        }
-      });
+      this.createPlayer();
     };
   }
 

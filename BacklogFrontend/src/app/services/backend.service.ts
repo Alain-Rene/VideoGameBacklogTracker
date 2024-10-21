@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GameAPI, Genre, Platform } from '../models/game';
+import { GameAPI, GameVideo, Genre, Platform } from '../models/game';
 import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class BackendService {
-  url:string = "http://localhost:5264/"; //ALAIN
-  // url:string = "https://localhost:7242/"; //David
+  // url:string = "http://localhost:5264/"; //ALAIN
+  url:string = "https://localhost:7242/"; //David
   constructor(
     private http:HttpClient,
     private router: Router
@@ -116,6 +116,11 @@ export class BackendService {
     this.router.navigate(['details/', gameId]);
   }
   
+  //videos
+  getGameVideosByGameId(id:number):Observable<GameVideo[]>
+  {
+    return this.http.get<GameVideo[]>(`${this.url}api/Game/game_videos/${id}`)
+  }
 
 
 }

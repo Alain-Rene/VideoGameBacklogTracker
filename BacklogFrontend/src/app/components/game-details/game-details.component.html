@@ -3,16 +3,28 @@
     <img [src]="getUpdatedImage(currentGame.cover.url)" class="current-img"/>
     <p> Genres: {{getGenres(currentGame.genres)}}</p>
     <p>Rating: {{currentGame.total_rating}}</p>
-    <p> Platforms: {{getPlatforms(currentGame.platforms)}}</p>
-    <p> Involved Companies: {{getCompanies(currentGame.involved_companies)}}</p>
-    <p>Release Date: {{ isDateInstance(getEarliestDate(currentGame.release_dates)) }}</p>
+    <p>Platforms: {{getPlatforms(currentGame.platforms)}}</p>
+    <p>Involved Companies: {{getCompanies(currentGame.involved_companies)}}</p>
+    <!-- Fix around new changes -->
+    <!-- <p>Release Date: {{getEarliestDate(currentGame.release_dates).toDateString()}}</p> -->
+    <h2>Trailer</h2>
+    <div class="video-container">
+        @if (currentGameVideos.length > 0 && !showMore){
+        <div>
+            <app-youtube-player class="youtube-player" [videoId]="currentGameVideos[0].video_id" (play)="playVideo(0)" ></app-youtube-player>
+        </div>
+        }
+        @if (currentGameVideos.length > 0 && showMore) {
+            @for (v of currentGameVideos; track $index) {
+                    <app-youtube-player class="youtube-player" [videoId]="v.video_id" (play)="playVideo($index)" [ngClass]="{'active-video': activeVideoIndex === $index}"></app-youtube-player>
+            }
+        }
+    </div>
+    <button class="show-more" (click)="toggleShowMore()">{{showMore ? 'Show Less' : 'Show More'}}</button>
 
-
-    
     <p>Summary:</p>
     <p>{{currentGame.summary}}</p>
-    <button (click)="addToBacklog(3, currentGame.id)">Add to backlog</button>
-
+    <button (click)="addToBacklog(1, currentGame.id)">Add to backlog</button>
     <h2>Similar Games</h2>
     <div class="similar-games-container">
         @for (g of similarGames; track $index) {

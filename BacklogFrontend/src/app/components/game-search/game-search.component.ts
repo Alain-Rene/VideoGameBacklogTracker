@@ -17,7 +17,7 @@ export class GameSearchComponent {
   display:boolean = false;
   name:string = "";
   genre:string = "";
-  rating:number|undefined;
+  total_rating:number|undefined;
   companyName:string|undefined;
   platform:string|undefined;
   releaseYear:string|undefined;
@@ -31,11 +31,11 @@ export class GameSearchComponent {
   filterGames(){
     this.name || undefined,
     this.genre || undefined,
-    this.rating !== null && this.rating !== 0 ? this.rating : undefined,
+    this.total_rating !== null && this.total_rating !== 0 ? this.total_rating : undefined,
     this.companyName || undefined,
     this.platform || undefined,
     this.releaseYear || undefined
-    this.backendService.getFilteredGames(this.name, this.genre, this.rating, this.companyName, this.platform, this.releaseYear).subscribe(response =>{
+    this.backendService.getFilteredGames(this.name, this.genre, this.total_rating, this.companyName, this.platform, this.releaseYear).subscribe(response =>{
       console.log(response);
       this.filteredGames = response;
     })
