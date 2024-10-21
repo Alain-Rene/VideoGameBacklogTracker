@@ -11,8 +11,10 @@
     height: 200px; /* Set a fixed height for the video player */
     border-radius: 8px; /* Optional: rounded corners */
     overflow: hidden; /* Ensure any overflow is hidden */
+    border-radius: 8px;
+    transition: height 0.3s;
   }
-  
+
   .youtube-player.active-video {
     height: 400px; /* Increase height when active */
   }
@@ -20,6 +22,7 @@
 .show-more {
     margin-top: 10px;
   }
+
 .similar-games-container {
     display: flex;
     overflow-x: auto; /* Allows horizontal scrolling */

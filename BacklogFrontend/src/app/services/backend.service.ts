@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class BackendService {
-  url:string = "http://localhost:5264/"; //ALAIN
-  // url:string = "https://localhost:7242/"; //David
+  // url:string = "http://localhost:5264/"; //ALAIN
+  url:string = "https://localhost:7242/"; //David
   constructor(
     private http:HttpClient,
     private router: Router

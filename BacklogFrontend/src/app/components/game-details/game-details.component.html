@@ -16,7 +16,7 @@
         }
         @if (currentGameVideos.length > 0 && showMore) {
             @for (v of currentGameVideos; track $index) {
-                    <app-youtube-player class="youtube-player" [videoId]="v.video_id" (play)="playVideo($index)" [style.height]="activeVideoIndex === $index ? '400px' : '200px'"></app-youtube-player>
+                    <app-youtube-player class="youtube-player" [videoId]="v.video_id" (play)="playVideo($index)" [ngClass]="{'active-video': activeVideoIndex === $index}"></app-youtube-player>
             }
         }
     </div>

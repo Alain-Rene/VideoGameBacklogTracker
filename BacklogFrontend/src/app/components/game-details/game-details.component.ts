@@ -4,11 +4,12 @@ import { BackendService } from '../../services/backend.service';
 import { ActivatedRoute } from '@angular/router';
 import { BackLogDTO } from '../../models/progresslog';
 import { YoutubePlayerComponent } from '../youtube-player/youtube-player.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-game-details',
   standalone: true,
-  imports: [YoutubePlayerComponent],
+  imports: [YoutubePlayerComponent, CommonModule],
   templateUrl: './game-details.component.html',
   styleUrl: './game-details.component.css',
 })
@@ -48,11 +49,11 @@ export class GameDetailsComponent {
   toggleShowMore(){
     this.showMore = !this.showMore;
   }
-  activeVideoIndex: number | null = null;
 
-playVideo(index: number) {
+  activeVideoIndex: number | null = null;
+  playVideo(index: number) {
   this.activeVideoIndex = index;
-}
+  } 
 
   getGenres(genres: Genre[]): string {
     if (genres == null) {

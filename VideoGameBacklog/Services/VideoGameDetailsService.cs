@@ -27,16 +27,17 @@ namespace Services
         }
         private const string ClientID = "ff0ca20shq346e24m52cp9ozizz6ua"; // Twitch client ID
         private const string Authorization = "ll77khnf1la36uuwzx8z7e0sfzsfjm"; // Twitch access token for IGDB API
-        public async Task<List<GameApi>> GetGames(int offset, int limit = 10) //not sure if offset and limit are necessary. Limit is default 10 and prolly don't need to offset that. -DB
+        public async Task<List<GameApi>> GetGames(int offset, int limit = 10) //offset and limit will be helpful for pagination -DB
         {
             string endpoint = "games";
 
-            string requestBody = "fields name, genres.name, summary, total_rating, " +
-                     "platforms.name, franchise, involved_companies.company.name, cover.url, videos; " +
-                     $"sort total_rating desc; where themes != (42) & total_rating_count >= 50; limit {limit}; offset {offset};";
-            // string requestBody = "fields name, genres.name, summary, total_rating," +
-            //          "platforms.name, release_dates.human, similar_games, involved_companies.company.name, cover.url;" +
-            //          $"sort total_rating desc; limit {limit}; offset {offset}; where category = (0, 8, 9) & aggregated_rating != null & total_rating_count > 50;";
+            //string requestBody = "fields name, genres.name, summary, total_rating, " +
+            //         "platforms.name, franchise, involved_companies.company.name, cover.url, videos; " +
+            //         $"sort total_rating desc; where themes != (42) & total_rating_count >= 50; limit {limit}; offset {offset};";
+
+            string requestBody = "fields name, genres.name, summary, total_rating," +
+                     "platforms.name, release_dates.human, similar_games, involved_companies.company.name, cover.url, videos;" +
+                     $"sort total_rating desc; limit {limit}; offset {offset}; where category = (0, 8, 9) & aggregated_rating != null & total_rating_count >= 50 & themes != (42);";
 
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
             {
@@ -56,19 +57,19 @@ namespace Services
             return games;
         }
 
-<<<<<<< HEAD
+
+        //public async Task<List<GameApi>> GetFilteredGames(int offset, int limit = 10, string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
+        //{
+        //    string endpoint = "games";
+
+        //    string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name,release_dates.human, cover.url; limit {limit}; offset {offset};";
+
+
         public async Task<List<GameApi>> GetFilteredGames(int offset, int limit = 10, string? name = null, string? genre = null, int? total_rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name,release_dates.human, cover.url; where themes != (42) & total_rating_count >= 1; limit {limit}; offset {offset};";
-=======
-        public async Task<List<GameApi>> GetFilteredGames(int offset, int limit = 10, string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)
-        {
-            string endpoint = "games";
-
-            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name,release_dates.human, cover.url; limit {limit}; offset {offset};";
->>>>>>> 95fde43bb46d2493bd3f961246fbc40b90ecddd0
+            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name, release_dates.human, cover.url; where themes != (42) & total_rating_count >= 1; limit {limit}; offset {offset};";
 
             int counter = 0;
             string filters = "";
@@ -93,20 +94,17 @@ namespace Services
             {
                 if(counter == 0)
                 {
-<<<<<<< HEAD
                     filters += $"rating >= {total_rating}";
                 }
                 else
                 {
                     filters += $" & rating >= {total_rating}";
-=======
-                    filters += $"total_rating >= {rating}";
+                    //filters += $"total_rating >= {rating}";
                 }
-                else
-                {
-                    filters += $" & total_rating >= {rating}";
->>>>>>> 95fde43bb46d2493bd3f961246fbc40b90ecddd0
-                }
+                //else
+                //{
+                //    filters += $" & total_rating >= {rating}";
+                //}
                 counter++;
             }
             if(!companyName.IsNullOrEmpty())
@@ -194,11 +192,11 @@ namespace Services
         {
             string endpoint = "games";
 
-<<<<<<< HEAD
-            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
-=======
-            string requestBody = $"fields name, genres.name, summary, total_rating, similar_games, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
->>>>>>> 95fde43bb46d2493bd3f961246fbc40b90ecddd0
+
+            //string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
+
+            string requestBody = $"fields name, genres.name, summary, total_rating, similar_games, involved_companies.company.name, platforms.name, release_dates.human, cover.url; where id = {id};";
+
 
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
             {
