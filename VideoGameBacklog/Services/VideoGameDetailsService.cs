@@ -68,7 +68,7 @@ namespace Services
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name, release_dates.human, cover.url; where themes != (42) & total_rating_count >= 1; limit {limit}; offset {offset};";
+            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name, release_dates.human, cover.url; limit {limit}; offset {offset};";
 
             int counter = 0;
             string filters = "";
@@ -156,11 +156,11 @@ namespace Services
 
             if(counter > 0)
             {
-                requestBody += $" where category = (0, 8, 9) & {filters};";
+                requestBody += $" where category = (0, 8, 9) & themes != (42) & total_rating_count >= 1 & {filters};";
             }
             if (counter == 0)
             {
-                requestBody += " where category = (0, 8, 9);";
+                requestBody += " where category = (0, 8, 9) & themes != (42) & total_rating_count >= 1; ";
             }
             System.Console.WriteLine(filters);
             System.Console.WriteLine(requestBody);

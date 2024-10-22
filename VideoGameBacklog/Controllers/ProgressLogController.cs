@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services;
 using VideoGameBacklog.DTOs;
 using VideoGameBacklog.Models;
@@ -109,7 +110,7 @@ namespace VideoGameBacklog.Controllers
             List<RetrieveBackLogDTO> gameList = result.Select(l => new RetrieveBackLogDTO {
                 Status = l.Status,
                 PlayTime = l.PlayTime,
-                Order = l.Order
+                Order = l.Order,
                 Game = games.FirstOrDefault(g => g.id == l.GameId),
             }).ToList();
 
