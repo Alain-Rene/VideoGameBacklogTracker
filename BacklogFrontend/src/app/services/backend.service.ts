@@ -107,6 +107,22 @@ export class BackendService {
     return this.http.get<User>(`${this.url}api/Users/${id}`);
   }
 
+  getFriendsById(id:number):Observable<User[]>
+  {
+    return this.http.get<User[]>(`${this.url}friends/${id}`);
+  }
+
+  addFriend(userId:number, friendId:number):Observable<User>
+  {
+    return this.http.post<User>(`${this.url}/friends/${userId}/${friendId}`, {});
+  }
+
+  deleteFriend(userId:number, friendId:number):Observable<User>
+  {
+    return this.http.delete<User>(`${this.url}friends/${userId}/${friendId}`);
+  }
+
+
   updateUser(u:User):Observable<User>
   {
     return this.http.put<User>(`${this.url}api/Users/${u.id}`, u);
@@ -116,6 +132,8 @@ export class BackendService {
   {
     return this.http.put<User>(`${this.url}XP/${u.id}`, u);
   }
+
+  
   
 
   navigateToDetails(gameId: number){

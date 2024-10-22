@@ -1,0 +1,13 @@
+<p>profile works!</p>
+<h1>This is {{currentUser.userName}}'s profile!</h1>
+
+<p>Current level: {{currentUser.level}}</p>
+<p>Current XP: {{currentUser.totalXp}}</p>
+
+<h3>{{currentUser.userName}}'s friends:</h3>
+@for (f of friends; track $index) {
+    <p>{{f.userName}}</p>
+    <p>Level: {{f.level}}</p>
+    <p>XP: {{f.totalXp}}</p>
+    <!-- <button class="button" (click)="navigateToDetails(l.game.id)">View Backlog</button> -->
+}

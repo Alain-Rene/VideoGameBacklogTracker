@@ -4,11 +4,13 @@ import { HomeComponent } from './components/home/home.component';
 import { GameSearchComponent } from './components/game-search/game-search.component';
 import { GameDetailsComponent } from './components/game-details/game-details.component';
 import { CommunityComponent } from './components/community/community.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
     {path:"backlog/:id", component:UserLogsComponent},
     {path:"", component:HomeComponent},
     {path:"search", component:GameSearchComponent},
     {path:"details/:id",component:GameDetailsComponent},
-    {path:"community", component:CommunityComponent}
+    {path:"community", component:CommunityComponent},
+    {path:"profile/:id", component:ProfileComponent}
 ];

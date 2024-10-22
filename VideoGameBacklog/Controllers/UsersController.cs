@@ -117,10 +117,51 @@ namespace VideoGameBacklog.Controllers
                 return BadRequest("You cannot add yourself to your friendslist, weirdo");
             }
 
-            User result = dbContext.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == userId);
+            User user = dbContext.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == userId);
+            User friend = dbContext.Users.FirstOrDefault(u => u.Id == friendId);
 
-            // Incomplete method
+            if (user == null || friend == null)
+            {
+                return NotFound("One or both users not found");
+            }
+
+            if (user.Friends.Any(f => f.Id == friendId))
+            {
+                return BadRequest("These two are already friends! :)");
+            }
+
+            user.Friends.Add(friend);
+
+            friend.Friends.Add(user);
+
+            dbContext.SaveChanges();
+
             return Ok("Friend added");
+        }
+
+        [HttpDelete("/friends/{userId}/{friendId}")]
+        public async Task<IActionResult> RemoveFriend(int userId, int friendId)
+        {
+            User user = dbContext.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == userId);
+
+            User friend = dbContext.Users.FirstOrDefault(u => u.Id == friendId);
+
+            if (user == null || friend == null)
+            {
+                return NotFound("One or both users were not found.");
+            }
+
+            if (!user.Friends.Any(f => f.Id == friendId))
+            {
+                return BadRequest("These users are not friends. :(");
+            }
+
+            user.Friends.Remove(friend);
+
+            friend.Friends.Remove(user);
+            dbContext.SaveChanges();
+
+            return Ok("Friend removed successfully");
         }
     }
 }
