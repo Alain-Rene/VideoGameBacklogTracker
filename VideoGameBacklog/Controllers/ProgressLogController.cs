@@ -110,11 +110,12 @@ namespace VideoGameBacklog.Controllers
         {
              List<GameApi> games = await _vgbService.GetGamesInBacklog(id);
             // Select statement is automatically converting ProgressLogs into DTOs
-            List<ProgressLog> result = await dbContext.ProgressLogs.Where(l => l.UserId.HasValue && l.UserId.Value == id && l.Status == "Complete").ToListAsync();
+            List<ProgressLog> result = await dbContext.ProgressLogs.Where(l => l.Status == "Complete").ToListAsync();
             List<RetrieveBackLogDTO> gameList = result.Select(l => new RetrieveBackLogDTO {
                 Status = l.Status,
                 PlayTime = l.PlayTime,
-                Game = games.FirstOrDefault(g => l.GameId.HasValue && g.id == l.GameId.Value),
+                Order = l.Order,
+                Game = games.FirstOrDefault(g => g.id == l.GameId),
             }).ToList();
 
             

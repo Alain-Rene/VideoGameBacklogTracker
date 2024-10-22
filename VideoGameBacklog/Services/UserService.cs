@@ -162,14 +162,14 @@ namespace Services
         {
             List<GameApi> games = _vgbService.GetGamesInBacklog(userId).Result; // Call your method to get games in backlog
             List<ProgressLog> result = dbContext.ProgressLogs
-                .Where(l => l.UserId.HasValue && l.UserId.Value == userId && l.Status == "Complete")
+                .Where(l => l.UserId == userId && l.Status == "Complete")
                 .ToList();
 
             List<RetrieveBackLogDTO> gameList = result.Select(l => new RetrieveBackLogDTO
             {
                 Status = l.Status,
                 PlayTime = l.PlayTime,
-                Game = games.FirstOrDefault(g => l.GameId.HasValue && g.id == l.GameId.Value),
+                Game = games.FirstOrDefault(g => g.id == l.GameId),
             }).ToList();
 
             return gameList;
