@@ -5,11 +5,13 @@ import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../../models/progre
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-logs',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, DragDropModule, CommonModule],
   templateUrl: './user-logs.component.html',
   styleUrl: './user-logs.component.css'
 })
@@ -50,11 +52,12 @@ export class UserLogsComponent {
     this.test.gameId = updatedLog.game.id;
     this.test.status = updatedLog.status;
     this.test.playTime = updatedLog.playTime;
+    this.test.order = updatedLog.order
     this.backendService.updateProgressLog(1, this.test).subscribe(response => {
       console.log(response);
       updatedLog.playTime = response.playtime;
       updatedLog.status = response.status;
-
+      updatedLog.order = response.order;
     });
     if(updatedLog.status == "Complete")
     {
@@ -83,6 +86,18 @@ export class UserLogsComponent {
     this.updatedGame.game.id = this.userLogs[index].game.id;
   }
 
+  drop(event: CdkDragDrop<RetrieveBackLogDTO[]>){
+    moveItemInArray(this.userLogs, event.previousIndex, event.currentIndex);
+    this.userLogs.forEach((log, index) => {
+      log.order = index;
+      this.updateGame(log);
+    });
+  }
 
+    getUpdatedImage(url:string): string{
+    return url.replace("t_thumb", "t_original");
+  }
+
+  
 
 }

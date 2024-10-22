@@ -22,12 +22,13 @@ public partial class VideoGameBacklogDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=localhost,1433; Initial Catalog=VideoGameBacklogDB; User ID=SA; Password=D3ffL6mI9frf; TrustServerCertificate=true;");
+        // => optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=VideoGameBacklogDB; Integrated Security=SSPI;Encrypt=false;TrustServerCertificate=True;"); //WINDOWS
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ProgressLog>(entity =>
         {
-            entity.HasKey(e => e.LogId).HasName("PK__progress__5E5499A8BB5921E7");
+            entity.HasKey(e => e.LogId).HasName("PK__progress__5E5499A80A7B4FF1");
 
             entity.ToTable("progressLogs");
 
@@ -38,16 +39,17 @@ public partial class VideoGameBacklogDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.ProgressLogs)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__progressL__UserI__5CD6CB2B");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__progressL__UserI__02FC7413");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3213E83F1085D562");
+            entity.HasKey(e => e.Id).HasName("PK__users__3213E83FCF79DA63");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.GoogleId, "UQ__users__A6FBF31B8DB0D8D2").IsUnique();
+            entity.HasIndex(e => e.GoogleId, "UQ__users__A6FBF31BB4CD516C").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.GoogleId)

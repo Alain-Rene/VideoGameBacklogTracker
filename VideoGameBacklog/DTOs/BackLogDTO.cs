@@ -15,6 +15,7 @@ namespace VideoGameBacklog.DTOs
         public string? Status { get; set; }
 
         public int? PlayTime { get; set; }
+        public int Order { get; set; }
     }
 
     public class RetrieveBackLogDTO
@@ -22,6 +23,7 @@ namespace VideoGameBacklog.DTOs
         public string? Status { get; set; }
 
         public int? PlayTime { get; set; }
+        public int Order {  get; set; }
         
         [JsonIgnore]
         public GameApi? Game {  get; set; }

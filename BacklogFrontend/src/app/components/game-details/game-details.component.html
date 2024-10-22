@@ -5,20 +5,21 @@
     <p>Rating: {{currentGame.total_rating}}</p>
     <p>Platforms: {{getPlatforms(currentGame.platforms)}}</p>
     <p>Involved Companies: {{getCompanies(currentGame.involved_companies)}}</p>
-    <!-- Fix around new changes -->
     <p>Release Date: {{isDateInstance(getEarliestDate(currentGame.release_dates))}}</p>
     <h2>Trailer</h2>
-    <div class="video-container">
+    <div>
         @if (currentGameVideos.length > 0 && !showMore){
         <div>
             <app-youtube-player class="youtube-player" [videoId]="currentGameVideos[0].video_id" (play)="playVideo(0)" ></app-youtube-player>
         </div>
         }
+        <div class="video-container">
         @if (currentGameVideos.length > 0 && showMore) {
             @for (v of currentGameVideos; track $index) {
-                    <app-youtube-player class="youtube-player" [videoId]="v.video_id" (play)="playVideo($index)" [ngClass]="{'active-video': activeVideoIndex === $index}"></app-youtube-player>
+                    <app-youtube-player class="youtube-player" [videoId]="v.video_id" (play)="playVideo($index)"></app-youtube-player>
             }
         }
+        </div>
     </div>
     <button class="show-more" (click)="toggleShowMore()">{{showMore ? 'Show Less' : 'Show More'}}</button>
 
