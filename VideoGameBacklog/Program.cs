@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
         {
             //replace localhost with yours            //also add your deployed website
             policy.WithOrigins("http://localhost:4200",
-                                "https://MyChatRoom.com").AllowAnyMethod().AllowAnyHeader();
+                                "https://red-mud-08705140f.5.azurestaticapps.net").AllowAnyMethod().AllowAnyHeader();
         });
 });
 //WINDOWS
