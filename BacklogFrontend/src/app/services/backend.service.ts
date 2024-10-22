@@ -5,13 +5,14 @@ import { GameAPI, GameVideo, Genre, Platform } from '../models/game';
 import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../models/progresslog';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
-  url:string = "http://localhost:5264/"; //ALAIN
-  // url:string = "https://localhost:7242/"; //David
+  // url:string = "http://localhost:5264/"; //ALAIN
+  url:string = environment.apiDomain; //David
   constructor(
     private http:HttpClient,
     private router: Router

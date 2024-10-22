@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace VideoGameBacklog.Models;
 
@@ -21,7 +22,11 @@ public partial class VideoGameBacklogDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost,1433; Initial Catalog=VideoGameBacklogDB; User ID=SA; Password=D3ffL6mI9frf; TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer(Secret.ConnectionString, builder =>
+        {
+            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        });
+    //Windows
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,14 +72,14 @@ public partial class VideoGameBacklogDbContext : DbContext
                     r => r.HasOne<User>().WithMany()
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__friends__friend___03F0984C"),
+                        .HasConstraintName("FK__friends__friend___08B54D69"),
                     l => l.HasOne<User>().WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__friends__user_id__02FC7413"),
+                        .HasConstraintName("FK__friends__user_id__07C12930"),
                     j =>
                     {
-                        j.HasKey("UserId", "FriendId").HasName("PK__friends__FA44291A089BBCBC");
+                        j.HasKey("UserId", "FriendId").HasName("PK__friends__FA44291A0167E3FB");
                         j.ToTable("friends");
                         j.IndexerProperty<int>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<int>("FriendId").HasColumnName("friend_id");
@@ -86,14 +91,14 @@ public partial class VideoGameBacklogDbContext : DbContext
                     r => r.HasOne<User>().WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__friends__user_id__02FC7413"),
+                        .HasConstraintName("FK__friends__user_id__07C12930"),
                     l => l.HasOne<User>().WithMany()
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__friends__friend___03F0984C"),
+                        .HasConstraintName("FK__friends__friend___08B54D69"),
                     j =>
                     {
-                        j.HasKey("UserId", "FriendId").HasName("PK__friends__FA44291A089BBCBC");
+                        j.HasKey("UserId", "FriendId").HasName("PK__friends__FA44291A0167E3FB");
                         j.ToTable("friends");
                         j.IndexerProperty<int>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<int>("FriendId").HasColumnName("friend_id");

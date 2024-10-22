@@ -22,11 +22,10 @@ namespace Services
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://api.igdb.com/v4/");
-            _httpClient.DefaultRequestHeaders.Add("Client-ID", ClientID);
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Authorization);
+            _httpClient.DefaultRequestHeaders.Add("Client-ID", Secret.ClientID);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Secret.Authorization);
         }
-        private const string ClientID = "ff0ca20shq346e24m52cp9ozizz6ua"; // Twitch client ID
-        private const string Authorization = "ll77khnf1la36uuwzx8z7e0sfzsfjm"; // Twitch access token for IGDB API
+
         public async Task<List<GameApi>> GetGames(int offset, int limit = 10) //offset and limit will be helpful for pagination -DB
         {
             string endpoint = "games";
