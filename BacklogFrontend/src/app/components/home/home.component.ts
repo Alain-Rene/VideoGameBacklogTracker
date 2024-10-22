@@ -16,6 +16,9 @@ export class HomeComponent {
   // googleUser: SocialUser = {} as SocialUser;
   loggedIn: boolean = false;
   allGames:GameAPI[] = [];
+  switchGames: GameAPI[] = [];
+  PsGames: GameAPI[] = [];
+  XboxGames: GameAPI[] = [];
   newProgressLog:BackLogDTO = {} as BackLogDTO;
   constructor(
     private backendService:BackendService,
@@ -24,6 +27,9 @@ export class HomeComponent {
 
   ngOnInit() {
     this.displayGames();
+    this.getSwitchGames();
+    this.getPlaystationGames();
+    this.getXboxGames();
   }
   displayGames() {
     this.backendService.getGames().subscribe(response => {
@@ -51,6 +57,30 @@ export class HomeComponent {
     else{
       return platforms.map(platform => platform.name).join(', ');
     }
+  }
+
+  getSwitchGames() {
+    let platform:string = "Switch";
+    this.backendService.getFilteredGames(undefined,undefined,86,"Nintendo",platform).subscribe(response => {
+      console.log(response);
+      this.switchGames = response;
+    })
+  }
+
+  getPlaystationGames(){
+    let platform:string = "PlayStation 5";
+    this.backendService.getFilteredGames(undefined,undefined,88,undefined,platform).subscribe(response => {
+      console.log(response);
+      this.PsGames = response;
+    })
+  }
+
+  getXboxGames(){
+    let platform:string = "Xbox Series"
+    this.backendService.getFilteredGames(undefined,undefined,83,undefined,platform).subscribe(response => {
+      console.log(response);
+      this.XboxGames = response;
+    })
   }
 
   navigateToDetails(gameId: number){

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { GameAPI } from '../../models/game';
 import { BackendService } from '../../services/backend.service';
 import { BackLogDTO, ProgressLog, RetrieveBackLogDTO } from '../../models/progresslog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-user-logs',
@@ -19,15 +20,18 @@ export class UserLogsComponent {
   allLogs:ProgressLog[] = [];
   userGames: GameAPI[] = [];
   updatedGame = {} as RetrieveBackLogDTO;
+  currentUser = {} as User;
   test:BackLogDTO = {} as BackLogDTO;
 
   constructor(
     private backendService:BackendService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.getGamesById();
+    this.getCurrentUser();
   }
 
   getGamesById() {
@@ -52,7 +56,26 @@ export class UserLogsComponent {
       updatedLog.status = response.status;
 
     });
+    if(updatedLog.status == "Complete")
+    {
+      this.backendService.updateEXP(this.currentUser).subscribe((response) => {
+      console.log(response);
+      })
+    }
     this.getGamesById();
+  }
+
+  getCurrentUser(){
+    this.activatedRoute.paramMap.subscribe((params) => {
+      let id: number = Number(params.get('id'));
+
+      this.backendService.getUserById(id).subscribe((response) => {
+        console.log(response);
+        this.currentUser = response;
+      });
+
+     
+    });
   }
 
   displayToggle(index:number){

@@ -1,0 +1,16 @@
+<p>community works!</p>
+<h1>Top Users</h1>
+
+<div class="top-users-container">
+    @for (u of allUsers; track $index) {
+    <div class="top-users card">
+        <img [src]="u.pfp" class="card-img-top" alt="{{u.pfp}}" />
+        <div class="card-body">
+            <h5 class="card-title">{{u.userName}}</h5>
+            <p class="card-text">Level: {{u.level}}</p>
+            <p class="card-text">XP: {{u.totalXp}}</p>
+        </div>
+    </div>
+    }
+    
+</div>

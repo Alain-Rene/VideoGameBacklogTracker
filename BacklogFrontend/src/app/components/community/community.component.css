@@ -1,11 +1,11 @@
-.pop-games-container{
+.top-users-container {
     display: flex;
     overflow-x: auto; 
     white-space: nowrap; 
     padding: 10px; 
 }
 
-.pop-games {
+.top-users {
     min-width: 150px; 
     max-width: 150px; 
     margin-right: 10px; 
@@ -13,12 +13,11 @@
     overflow: hidden; 
 }
 
-.pop-games img {
+.top-users img {
     max-width: 100%;
     height: auto; 
     cursor: pointer;
 }
-
 .card-title {
     margin: 0;
     overflow: hidden;
@@ -34,16 +33,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block; 
-    margin-bottom: 5px;
     max-width: 100%;
     box-sizing: border-box;
-}
-.card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-button.card-text {
-    margin-top: 10px;
 }

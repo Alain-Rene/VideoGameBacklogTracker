@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace VideoGameBacklog.Models;
 
@@ -14,6 +13,13 @@ public partial class User
 
     public string? Pfp { get; set; }
 
-    [JsonIgnore]
+    public int? TotalXp { get; set; }
+
+    public int? Level { get; set; }
+
     public virtual ICollection<ProgressLog> ProgressLogs { get; set; } = new List<ProgressLog>();
+
+    public virtual ICollection<User> Friends { get; set; } = new List<User>();
+
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

@@ -101,6 +101,22 @@ namespace VideoGameBacklog.Controllers
             };
             return Ok(dto);
         }
+        [HttpGet("/DTO/complete/{id}")]
+        public async Task<IActionResult> GetCompletedGames(int id)
+        {
+             List<GameApi> games = await _vgbService.GetGamesInBacklog(id);
+            // Select statement is automatically converting ProgressLogs into DTOs
+            List<ProgressLog> result = await dbContext.ProgressLogs.Where(l => l.UserId.HasValue && l.UserId.Value == id && l.Status == "Complete").ToListAsync();
+            List<RetrieveBackLogDTO> gameList = result.Select(l => new RetrieveBackLogDTO {
+                Status = l.Status,
+                PlayTime = l.PlayTime,
+                Game = games.FirstOrDefault(g => l.GameId.HasValue && g.id == l.GameId.Value),
+            }).ToList();
+
+            
+
+            return Ok(gameList);
+        }
         [HttpGet("/DTO/userID/{id}")]
 
         public async Task<IActionResult> GetDTOByUserId(int id)
@@ -138,6 +154,7 @@ namespace VideoGameBacklog.Controllers
             if(result == null) { return NotFound("This user cannot be found"); }
             else { dbContext.ProgressLogs.Remove(result); dbContext.SaveChanges(); return NoContent(); }
         }
+        
 
     }
 }

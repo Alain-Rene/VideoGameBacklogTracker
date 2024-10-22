@@ -3,4 +3,6 @@ export interface User {
     googleId: string;
     userName: string;
     pfp: string;
+    totalXp: number;
+    level: number;
 }

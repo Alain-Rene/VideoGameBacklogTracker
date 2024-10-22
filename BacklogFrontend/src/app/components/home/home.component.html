@@ -1,14 +1,59 @@
 <body>
-  <div>
-    <h1>Popular games</h1>
+  <h1>Popular games</h1>
+  <div class="pop-games-container">
     @for (g of allGames; track $index) {
-    <h2>{{ g.name }}</h2>
-    <img [src]="g.cover.url" />
-    <p>Rating: {{ g.total_rating }}</p>
-    <p>Genres: {{ getGenres(g.genres) }}</p>
-    <p>Platforms: {{getPlatforms(g.platforms)}} </p>
-    <button (click)="addToBacklog(1, g.id)">Add to backlog</button>
-    <button class="links" (click)="navigateToDetails(g.id)" >Game details</button>
+    <div class="pop-games card">
+      <img (click)="navigateToDetails(g.id)" [src]="g.cover.url" />
+      <div class="card-body">
+        <h5 class="card-title">{{ g.name }}</h5>
+        <p class="card-text">{{ g.total_rating }}</p>
+        <p class="card-text">{{g.genres[0].name}}</p>
+        <button class="card-text" (click)="addToBacklog(1, g.id)">Add to backlog</button>
+      </div>
+    </div>
     }
   </div>
+    <h1>Popular Nintendo Switch games</h1>
+    <div class="pop-games-container">
+      @for (g of switchGames; track $index) {
+      <div class="pop-games card">
+        <img (click)="navigateToDetails(g.id)" [src]="g.cover.url" />
+        <div class="card-body">
+          <h5 class="card-title">{{ g.name }}</h5>
+          <p class="card-text">{{ g.total_rating }}</p>
+          <p class="card-text">{{g.genres[0].name}}</p>
+          <button class="card-text" (click)="addToBacklog(1, g.id)">Add to backlog</button>
+        </div>
+      </div>
+      }
+    </div>
+    <h1>Popular Playstation games</h1>
+    <div class="pop-games-container">
+      @for (g of PsGames; track $index) {
+      <div class="pop-games card">
+        <img (click)="navigateToDetails(g.id)" [src]="g.cover.url" />
+        <div class="card-body">
+          <h5 class="card-title">{{ g.name }}</h5>
+          <p class="card-text">{{ g.total_rating }}</p>
+          <p class="card-text">{{g.genres[0].name}}</p>
+          <button class="card-text" (click)="addToBacklog(1, g.id)">Add to backlog</button>
+        </div>
+      </div>
+      }
+    </div>
+    <h1>Popular Xbox games</h1>
+    <div class="pop-games-container">
+      @for (g of XboxGames; track $index) {
+      <div class="pop-games card">
+        <img (click)="navigateToDetails(g.id)" [src]="g.cover.url" />
+        <div class="card-body">
+          <h5 class="card-title">{{ g.name }}</h5>
+          <p class="card-text">{{ g.total_rating }}</p>
+          <p class="card-text">{{g.genres[0].name}}</p>
+          <button class="card-text" (click)="addToBacklog(1, g.id)">Add to backlog</button>
+        </div>
+      </div>
+      }
+    </div>
 </body>
+

@@ -25,22 +25,22 @@
 
 .similar-games-container {
     display: flex;
-    overflow-x: auto; /* Allows horizontal scrolling */
-    white-space: nowrap; /* Prevents wrapping of child elements */
-    padding: 10px; /* Optional padding */
+    overflow-x: auto; 
+    white-space: nowrap; 
+    padding: 10px; 
 }
 
 .similar-game {
-    min-width: 150px; /* Minimum width for each game item */
-    max-width: 150px; /* Maximum width to control text overflow */
-    margin-right: 10px; /* Space between game items */
-    text-align: center; /* Center the text */
-    overflow: hidden; /* Hide overflowed content */
+    min-width: 150px; 
+    max-width: 150px; 
+    margin-right: 10px; 
+    text-align: center; 
+    overflow: hidden; 
 }
 
 .similar-game img {
-    max-width: 100%; /* Ensures images fit within their container */
-    height: auto; /* Keeps the aspect ratio */
+    max-width: 100%;
+    height: auto; 
     cursor: pointer;
 }
 /* .similar-game p {
@@ -48,7 +48,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 100%;  Ensures text stays within the bounds of the card 
+    max-width: 100%; 
     box-sizing: border-box;
 } */
 
@@ -56,21 +56,21 @@
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; /* Adds ellipsis */
-    display: block; /* Ensures the element is treated as a block */
-    max-width: 100%; /* Keeps it within the card's width */
+    text-overflow: ellipsis; 
+    display: block;
+    max-width: 100%; 
     box-sizing: border-box;
 }
 
 .card-text {
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; /* Adds ellipsis */
-    display: block; /* Ensures the element is treated as a block */
-    max-width: 100%; /* Keeps it within the card's width */
+    text-overflow: ellipsis;
+    display: block; 
+    max-width: 100%;
     box-sizing: border-box;
 }
 .current-img {
-    width: 300px; /* Set the desired width */
-    height: auto; /* Maintain aspect ratio */
+    width: 300px;
+    height: auto; 
 }

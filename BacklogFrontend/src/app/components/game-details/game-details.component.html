@@ -6,7 +6,7 @@
     <p>Platforms: {{getPlatforms(currentGame.platforms)}}</p>
     <p>Involved Companies: {{getCompanies(currentGame.involved_companies)}}</p>
     <!-- Fix around new changes -->
-    <!-- <p>Release Date: {{getEarliestDate(currentGame.release_dates).toDateString()}}</p> -->
+    <p>Release Date: {{isDateInstance(getEarliestDate(currentGame.release_dates))}}</p>
     <h2>Trailer</h2>
     <div class="video-container">
         @if (currentGameVideos.length > 0 && !showMore){

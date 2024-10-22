@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class BackendService {
-  // url:string = "http://localhost:5264/"; //ALAIN
-  url:string = "https://localhost:7242/"; //David
+  url:string = "http://localhost:5264/"; //ALAIN
+  // url:string = "https://localhost:7242/"; //David
   constructor(
     private http:HttpClient,
     private router: Router
@@ -111,6 +111,12 @@ export class BackendService {
   {
     return this.http.put<User>(`${this.url}api/Users/${u.id}`, u);
   }
+  
+  updateEXP(u:User):Observable<User>
+  {
+    return this.http.put<User>(`${this.url}XP/${u.id}`, u);
+  }
+  
 
   navigateToDetails(gameId: number){
     this.router.navigate(['details/', gameId]);

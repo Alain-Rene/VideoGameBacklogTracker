@@ -56,3 +56,11 @@ public class GameVideo
     public string video_id { get; set; }
     public string checksum { get; set; }
 }
+
+public partial class CompletionTime
+    {
+        public long Id { get; set; }
+        public long GameId { get; set; }
+        public long Normally { get; set; }
+        public long Count { get; set; }
+    }

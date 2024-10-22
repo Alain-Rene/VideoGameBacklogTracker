@@ -27,6 +27,13 @@ namespace VideoGameBacklog.Controllers
 
             return Ok(result);
         }
+        [HttpGet("/test")]
+        public async Task<IActionResult> GetTest()
+        {
+            CompletionTime result = await _videoGameDetailsService.GetTimeToBeat(94873);
+
+            return Ok(result);
+        }
 
         [HttpGet("/filter")]
         public async Task<IActionResult> GetFilteredGames(string? name = null, string? genre = null, int? rating = null, string? companyName = null, string? platform = null, string? releaseYear = null)

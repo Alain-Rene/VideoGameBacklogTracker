@@ -94,17 +94,12 @@ namespace Services
             {
                 if(counter == 0)
                 {
-                    filters += $"rating >= {total_rating}";
+                    filters += $"total_rating >= {total_rating}";
                 }
                 else
                 {
-                    filters += $" & rating >= {total_rating}";
-                    //filters += $"total_rating >= {rating}";
+                    filters += $" & total_rating >= {total_rating}";
                 }
-                //else
-                //{
-                //    filters += $" & total_rating >= {rating}";
-                //}
                 counter++;
             }
             if(!companyName.IsNullOrEmpty())
@@ -162,7 +157,11 @@ namespace Services
 
             if(counter > 0)
             {
-                requestBody += $" where {filters};";
+                requestBody += $" where category = (0, 8, 9) & {filters};";
+            }
+            if (counter == 0)
+            {
+                requestBody += " where category = (0, 8, 9);";
             }
             System.Console.WriteLine(filters);
             System.Console.WriteLine(requestBody);
@@ -310,6 +309,33 @@ namespace Services
             List<GameApi> games = await response.Content.ReadFromJsonAsync<List<GameApi>>();
 
             return games;
+        }
+
+        public async Task<CompletionTime> GetTimeToBeat(int id)
+        {
+            string endpoint = "game_time_to_beats";
+
+
+            //string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, franchise, platforms.name, release_dates.human, cover.url; where id = {id};";
+
+            string requestBody = $"fields count, game_id, normally; where game_id = {id};";
+
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
+            {
+                Content = new StringContent(requestBody, Encoding.UTF8, "text/plain")
+            };
+
+            HttpResponseMessage response = await _httpClient.SendAsync(requestMessage);
+
+
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+
+            System.Console.WriteLine(jsonResponse);
+            List<CompletionTime> completionTimes = await response.Content.ReadFromJsonAsync<List<CompletionTime>>();
+
+            return completionTimes.FirstOrDefault();
         }
 
         //public async Task<List<GameVideo>> GetGameVideosAsync(int[] videoIds)

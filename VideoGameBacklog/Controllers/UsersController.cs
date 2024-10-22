@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using VideoGameBacklog.DTOs;
 using VideoGameBacklog.Models;
+using Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace VideoGameBacklog.Controllers
 {
@@ -12,6 +15,13 @@ namespace VideoGameBacklog.Controllers
     public class UsersController : ControllerBase
     {
         VideoGameBacklogDbContext dbContext = new VideoGameBacklogDbContext();
+
+        private readonly UserService _userService;
+
+        public UsersController(UserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpGet]
         public IActionResult GetUsers()
@@ -64,5 +74,53 @@ namespace VideoGameBacklog.Controllers
             return Ok(user);
         }
 
+        [HttpPut("/XP/{id}")]
+        public async Task<IActionResult> UpdateXP(int id)
+        {
+            int result = await _userService.UpdateUserExperience(id);
+
+            return Ok(result);
+        }
+
+        [HttpGet("/Level/{id}")]
+        public async Task<IActionResult> GetLevel(int id)
+        {
+            User result = dbContext.Users.FirstOrDefault(u => u.Id == id);
+            if (result == null)
+            {
+                return NotFound("This user cannot be found! ");
+            }
+
+            int currentLevel = _userService.CalculateCurrentLevel((int)result.TotalXp);
+
+            return Ok(currentLevel);
+        }
+
+        [HttpGet("/friends/{id}")]
+        public async Task<IActionResult> GetFriends(int id)
+        {
+            User result = dbContext.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == id);
+
+            if(result == null)
+            {
+                return NotFound("This user cannot be found!");
+            }
+
+            return Ok(result.Friends);
+        }
+
+        [HttpPost("/friends/{userId}/{friendId}")]
+        public async Task<IActionResult> AddFriend(int userId, int friendId)
+        {
+            if (userId == friendId)
+            {
+                return BadRequest("You cannot add yourself to your friendslist, weirdo");
+            }
+
+            User result = dbContext.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == userId);
+
+            // Incomplete method
+            return Ok("Friend added");
+        }
     }
 }
