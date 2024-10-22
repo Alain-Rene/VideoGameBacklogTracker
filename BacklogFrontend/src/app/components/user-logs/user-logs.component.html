@@ -1,36 +1,44 @@
 <h1>Your current backlog:</h1>
-@for (l of userLogs; track $index) {
-    <h2>{{ l.game.name }}</h2>
-    <img [src]="l.game.cover.url" height="150px" />
-    <p>Game status: {{ l.status }}</p>
-    <p>Current Playtime: {{ l.playTime }} hours</p>
-    <button (click)="displayToggle($index)">Update</button>
-    @if (display[$index]) {
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (l of userLogs; track $index) {
+        <div cdkDrag>
+              <div class="card">
+                <div class="card-content">
+                  <img class="cover-image" [src]="getUpdatedImage(l.game.cover.url)" alt="{{ l.game.name }} cover image"/>
+                  <div class="text-content">
+                    <h2>{{ l.game.name }}</h2>
+                    <p>Game status: {{ l.status }}</p>
+                    <p>Current Playtime: {{ l.playTime }} hours</p>
+                    
+                    <button class="button" (click)="displayToggle($index)">Update</button>
+                    
+                    <div *ngIf="display[$index]" class="update-section">
+                      <p>Status:</p>
+                      <label for="notStarted{{$index}}">Not Started
+                        <input type="radio" id="notStarted{{$index}}" [(ngModel)]="userLogs[$index].status" value="Not Started"/>
+                      </label>
+              
+                      <label for="inProgress{{$index}}">In-Progress
+                        <input type="radio" id="inProgress{{$index}}" [(ngModel)]="userLogs[$index].status" value="In-Progress"/>
+                      </label>
+              
+                      <label for="complete{{$index}}">Complete
+                        <input type="radio" id="complete{{$index}}" [(ngModel)]="userLogs[$index].status" value="Complete"/>
+                      </label>
+                      
+                      <div>
+                        <label for="playTime{{$index}}">Play Time:</label>
+                        <input type="number" id="playTime{{$index}}" [(ngModel)]="userLogs[$index].playTime" placeholder="Enter current playtime" class="playtime-input"/>
+                      </div>
+                      
+                      <button class="button" (click)="updateGame(userLogs[$index])">Submit Update</button>
+                    </div>
+                    
+                    <button class="button" (click)="navigateToDetails(l.game.id)">Game details</button>
+                  </div>
+                </div>
+              </div>
+              </div>
+    } 
 
-        <br>
-        Status:
-        <label for="notStarted{{$index}}">Not Started
-        <input type="radio" id="notStarted{{$index}}" [(ngModel)]="userLogs[$index].status" value="Not Started"/>
-        </label>
-
-        <label for="inProgress{{$index}}">In-Progress
-        <input type="radio" id="inProgress{{$index}}" [(ngModel)]="userLogs[$index].status" value="In-Progress" />
-        </label>
-
-        <label for="complete{{$index}}">Complete
-        <input type="radio" id="complete{{$index}}" [(ngModel)]="userLogs[$index].status" value="Complete"/>
-        </label>
-
-        <br>
-        <label for="playTime{{$index}}">Play Time:</label>
-        <input type="number" id="playTime{{$index}}" [(ngModel)]="userLogs[$index].playTime" placeholder="Enter current playtime" />
-        <br>
-        <button (click)="updateGame(userLogs[$index])">Submit Update</button>
-        <br>
-        }
-
-        
-        <button class="links" (click)="navigateToDetails(l.game.id)">
-            Game details
-        </button>
-}
+</div>

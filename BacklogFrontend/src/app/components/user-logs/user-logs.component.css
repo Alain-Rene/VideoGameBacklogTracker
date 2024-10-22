@@ -1,0 +1,57 @@
+.card {
+    width: 50rem; /* Card width */
+    border: 1px solid #ccc; /* Card border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden; /* To ensure rounded corners apply to the image */
+    margin: auto;
+  }
+  
+  .card-content {
+    display: flex; /* Use flexbox to align image and text */
+    margin-left: 0;
+  }
+  
+  .cover-image {
+    width: 200px; /* Fixed width for the cover image */
+    height: 300px; /* Maintain aspect ratio */
+  }
+  
+  .text-content {
+    padding: 20px; /* Add padding around text content */
+    flex: 1; /* Allow the text content to fill remaining space */
+  }
+  
+  .button {
+    display: block; /* Make buttons block level */
+    width: 200px; /* Full width */
+    padding: 10px; /* Button padding */
+    margin-top: 10px; /* Space between buttons */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners for buttons */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Darken button on hover */
+  }
+  
+  .update-section {
+    margin-top: 15px; /* Space above update section */
+  }
+  
+  .playtime-input {
+    width: 50%; /* Control width of playtime input */
+    margin-top: 5px; /* Space above input */
+  }
+
+  /* *{
+    margin: auto;
+  } */
+
+  h1{
+    text-align: center;
+  }

@@ -50,9 +50,8 @@ export class GameDetailsComponent {
     this.showMore = !this.showMore;
   }
 
-  activeVideoIndex: number | null = null;
+
   playVideo(index: number) {
-  this.activeVideoIndex = index;
   } 
 
   getGenres(genres: Genre[]): string {

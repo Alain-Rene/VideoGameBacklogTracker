@@ -8,6 +8,7 @@ export interface ProgressLog {
     status: string;
     playtime: number;
     user: User;
+    order: number;
 }
 
 export interface BackLogDTO {
@@ -15,10 +16,12 @@ export interface BackLogDTO {
     gameId: number;
     status?: string;
     playTime?: number;
+    order: number;
 }
 
 export interface RetrieveBackLogDTO {
     status?: string;
     playTime?: number;
     game: GameAPI;
+    order: number;
 }
