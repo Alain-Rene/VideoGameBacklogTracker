@@ -266,48 +266,42 @@ namespace Services
         {
             string endpoint = "games";
 
-            string requestBody = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, franchise, platforms.name,release_dates.human, cover.url;"; 
+            string requestBodyBase = $"fields name, genres.name, summary, total_rating, involved_companies.company.name, platforms.name,release_dates.human, cover.url;"; 
 
             User u = dbContext.Users.FirstOrDefault(x => x.Id == id);
 
             List<ProgressLog> logs = dbContext.ProgressLogs.Where(x => x.UserId == u.Id).ToList();
 
+            List<GameApi> allGames = new List<GameApi>();
+            int totalGames = logs.Count();
+            int batchSize = 10;
             int counter = 1;
-            string userGames = "";
-            foreach(ProgressLog l in logs)
+            for (int i = 0; i < totalGames; i += batchSize)
             {
-                userGames += l.GameId;
-                if(counter <= logs.Count())
+                IEnumerable<ProgressLog> batchLogs = logs.Skip(i).Take(batchSize);
+                string userGames = string.Join(",", batchLogs.Select(l => l.GameId));
+                System.Console.WriteLine(userGames);
+
+                string requestBody = requestBodyBase + $"where id = ({userGames});";
+                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
                 {
-                    userGames += ",";
-                }
-                counter++;
+                    Content = new StringContent(requestBody, Encoding.UTF8, "text/plain")
+                };
+
+                HttpResponseMessage response = await _httpClient.SendAsync(requestMessage);
+
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                System.Console.WriteLine(jsonResponse);
+
+                List<GameApi> games = await response.Content.ReadFromJsonAsync<List<GameApi>>();
+
+                if (games != null)
+                {
+                    allGames.AddRange(games);
+                }   
             }
 
-            System.Console.WriteLine(userGames);
-
-            userGames = userGames.Substring(0, userGames.Length - 1);
-
-            
-
-            requestBody += $"where id = ({userGames});";
-
-            System.Console.WriteLine(userGames);
-
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, endpoint)
-            {
-                Content = new StringContent(requestBody, Encoding.UTF8, "text/plain")
-            };
-
-            HttpResponseMessage response = await _httpClient.SendAsync(requestMessage);
-
-
-
-            string jsonResponse = await response.Content.ReadAsStringAsync();
-
-            List<GameApi> games = await response.Content.ReadFromJsonAsync<List<GameApi>>();
-
-            return games;
+            return allGames;
         }
 
         public async Task<CompletionTime> GetTimeToBeat(int id)
